@@ -7,19 +7,15 @@ import './../global.css';
 export default function RootLayout() {
   return (
     <>
-      <StatusBar style="dark" backgroundColor='#eff6ff' />
+      <StatusBar style="dark"/>
       <Stack>
-        
-
         {/* Toutes les autres pages n'auront pas de header par défaut 
           mais sera activer dans le _layout d (tabs) */}
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
 
         {/* index = page d'accueil, pas de header */}
-        <Stack.Screen name="index" options={{ headerShown: false }} />
+        <Stack.Screen name="onboarding" options={{ headerShown: false }} />
 
-
-        {/* Ajoute ici d'autres pages si tu veux personnaliser leurs titres/options */}
       </Stack>
     </>
   );

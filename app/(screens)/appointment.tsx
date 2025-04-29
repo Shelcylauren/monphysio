@@ -1,10 +1,11 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-export default function DiagnosticScreen() {
+export default function Appointment() {
   return (
     <View>
-      <Text>Diagnostic Screen</Text>
+      <Text>Appointment Screen</Text>
     </View>
   );
 }
+

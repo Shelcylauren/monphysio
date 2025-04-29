@@ -1,40 +1,43 @@
-import { Tabs } from 'expo-router';
 import React from 'react';
-import { Platform } from 'react-native';
-
-import HapticTab from '@/components/Footer';
-
-import { IconSymbol } from '@/components/ui/IconSymbol';
-import TabBarBackground from '@/components/ui/TabBarBackground';
-import { Colors } from '@/constants/Colors';
-import { useColorScheme } from '@/hooks/Usercoloscheme';
+import { Redirect, Tabs } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import AntDesign from '@expo/vector-icons/AntDesign';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { StatusBar } from 'expo-status-bar';
+import { useUserAuth } from '@/store/useUserAuth';
+  
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+
+  const hasFinishedOnboarding = useUserAuth((state) => state.hasFinishedOnboarding);
+
+  // Redirect to the onboarding screen if the user has not finished onboarding.
+  if (!hasFinishedOnboarding) {
+    return <Redirect href="/onboarding" />
+  }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <Tabs
         screenOptions={{
-          tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
           headerShown: false,
-          // tabBarButton: HapticTab,
-          // tabBarBackground: TabBarBackground,
-          // tabBarStyle: Platform.select({
-          //   ios: {
-          //     position: 'absolute',
-          //   },
-          //   default: {},
-          // }),
         }}
       >
         <Tabs.Screen
-          name="home"
+          name="index"
           options={{
             title: 'Home',
-            tabBarIcon: ({ color = "#000" }) => (
-              <IconSymbol size={28} name="house.fill" color={color} />
+            tabBarIcon: ({ color, size }) => (
+              <AntDesign name="home" size={size} color={color} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="forum"
+          options={{
+            title: 'Forum',
+            tabBarIcon: ({ color, size }) => (
+              <AntDesign name="wechat" size={size} color={color} />
             ),
           }}
         />
@@ -43,12 +46,31 @@ export default function TabLayout() {
           name="consultation"
           options={{
             title: 'Consultation',
-            tabBarIcon: ({ color = "#000" }) => (
-              <IconSymbol size={28} name="stethoscope" color={color} />
+            tabBarIcon: ({ color, size }) => (
+              <AntDesign name="medicinebox" size={size} color={color} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="clinic"
+          options={{
+            title: 'Clinic',
+            tabBarIcon: ({ color,size }) => (
+              <FontAwesome name="hospital-o" size={size} color={color} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="profile"
+          options={{
+            title: 'Profile',
+            tabBarIcon: ({ color, size }) => (
+              <AntDesign name="profile" size={size} color={color} />
             ),
           }}
         />
       </Tabs>
+      <StatusBar style="dark" backgroundColor='#fff' />
     </SafeAreaView>
   );
 }
