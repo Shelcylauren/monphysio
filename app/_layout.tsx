@@ -15,6 +15,7 @@ export default function RootLayout() {
 
         {/* index = page d'accueil, pas de header */}
         <Stack.Screen name="onboarding" options={{ headerShown: false }} />
+        <Stack.Screen name="consultForm" options={{ headerShown: false }} />
 
       </Stack>
     </>

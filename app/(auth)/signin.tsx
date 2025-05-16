@@ -3,14 +3,37 @@ import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { Link } from 'expo-router';
 import tw from 'twrnc';
 import { useUserAuth } from '@/store/useUserAuth';
+import CustomTextInput from '@/components/CustomInputText';
+import { MaterialIcons } from '@expo/vector-icons';
+
+interface FormData {
+    email: string;
+    password: string;
+}
+
 
 export default function Signin() {
+    const emailRef = React.useRef<TextInput>(null);
+    const passwordRef = React.useRef<TextInput>(null);
+    const confirmPasswordRef = React.useRef<TextInput>(null);
+    const [formData, setFormData] = useState<FormData>({
+        email: '',
+        password: ''
+    });
     const hasOnboarded = useUserAuth((state) => state.toggleHasOnboarded);
 
     const handleSignin = () => {
         console.log("Signin button pressed");
         hasOnboarded(); // Toggle the onboarding state
     }
+
+    const handleChange = (name: keyof FormData, value: string) => {
+        setFormData((prevState) => ({
+            ...prevState,
+            [name]: value,
+        }));
+        console.log(`Updated ${name}: ${value}`);
+    };
 
     return (
         <>
@@ -19,36 +42,47 @@ export default function Signin() {
                 {/* Content */}
                 <View style={tw`items-center p-6 `}>
                     <Text style={tw`text-2xl font-semibold text-center text-gray-500`}>
-                        Signin to Join
+                        Login to your account
+                    </Text>
+                    <Text style={tw`mt-1 text-sm text-gray-500`}>
+                        welcome back to your account
                     </Text>
 
                     {/* Text input View */}
-                    <View style={tw`w-full mt-6`}>
-                        <Text style={tw`text-base font-medium text-gray-500`}>
-                            Email
-                        </Text>
-                        <View style={tw`py-2 border-b border-gray-300`}>
-                            <TextInput
-                                placeholder="Enter your email"
-                                style={tw`text-base text-gray-500`}
-                            />
-                        </View>
+                    <View style={tw`w-full mt-3`}>
+                        <CustomTextInput
+                            // ref={emailRef}
+                            label="Email*"
+                            placeholder="Ex: example@example.com"
+                            keyboardType="email-address"
+                            autoCapitalize="none"
+                            leftIcon={<MaterialIcons name="email" size={20} color="#4B5563" />}
+                            value={formData.email}
+                            onChangeText={(text) => handleChange('email', text)}
+                            // error={errors.email}
+                            // touched={touched.email}
+                            returnKeyType="next"
+                        />
                     </View>
-                    <View style={tw`w-full mt-6`}>
-                        <Text style={tw`text-base font-medium text-gray-500`}>
-                            Password
-                        </Text>
-                        <View style={tw`py-2 border-b border-gray-300`}>
-                            <TextInput
-                                placeholder="Enter your password"
-                                secureTextEntry
-                                style={tw`text-base text-gray-500`}
-                            />
-                        </View>
+                    <View style={tw`w-full`}>
+                        <CustomTextInput
+                            // ref={passwordRef}
+                            label="Password*"
+                            placeholder="Enter your password"
+                            secureTextEntry
+                            type="password"
+                            leftIcon={<MaterialIcons name="lock" size={20} color="#4B5563" />}
+                            value={formData.password}
+                            onChangeText={(text) => handleChange('password', text)}
+                            // error={errors.password}
+                            // touched={touched.password}
+                            returnKeyType="next"
+                            onSubmitEditing={() => confirmPasswordRef.current?.focus()}
+                        />
                     </View>
 
                     <TouchableOpacity
-                        style={tw`w-full px-6 py-3 mt-6 bg-blue-600 rounded-full`}
+                        style={tw`w-full px-6 py-3 mt-2 bg-blue-600 rounded-full`}
                         onPress={() => handleSignin()}
                         activeOpacity={0.8}
                     >

@@ -13,7 +13,7 @@ export default function TabLayout() {
 
   // Redirect to the onboarding screen if the user has not finished onboarding.
   if (!hasFinishedOnboarding) {
-    return <Redirect href="/onboarding" />
+    return <Redirect href="/(auth)/signup" />
   }
 
   return (
