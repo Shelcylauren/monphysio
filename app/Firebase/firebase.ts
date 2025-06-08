@@ -1,0 +1,127 @@
+// firebase.ts
+import { initializeApp } from 'firebase/app';
+import { 
+  getAuth, 
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged,
+  User
+} from 'firebase/auth';
+import { 
+  getFirestore, 
+  doc, 
+  setDoc, 
+  getDoc 
+} from 'firebase/firestore';
+
+// Configuration Firebase - Remplacez par vos propres clés
+const firebaseConfig = {
+  apiKey: "your-api-key",
+  authDomain: "your-project.firebaseapp.com",
+  projectId: "your-project-id",
+  storageBucket: "your-project.appspot.com",
+  messagingSenderId: "123456789",
+  appId: "your-app-id"
+};
+
+// Initialisation Firebase
+const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+export const db = getFirestore(app);
+
+// Types
+export interface UserProfile {
+  uid: string;
+  email: string;
+  createdAt: Date;
+  displayName?: string;
+}
+
+// Fonctions d'authentification
+export const signUp = async (email: string, password: string): Promise<User> => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    
+    // Créer le profil utilisateur dans Firestore
+    await createUserProfile(user);
+    
+    return user;
+  } catch (error: any) {
+    throw new Error(getErrorMessage(error.code));
+  }
+};
+
+export const signIn = async (email: string, password: string): Promise<User> => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    return userCredential.user;
+  } catch (error: any) {
+    throw new Error(getErrorMessage(error.code));
+  }
+};
+
+export const logOut = async (): Promise<void> => {
+  try {
+    await signOut(auth);
+  } catch (error: any) {
+    throw new Error('Erreur lors de la déconnexion');
+  }
+};
+
+// Créer le profil utilisateur dans Firestore
+const createUserProfile = async (user: User): Promise<void> => {
+  try {
+    const userProfile: UserProfile = {
+      uid: user.uid,
+      email: user.email!,
+      createdAt: new Date(),
+    };
+    
+    await setDoc(doc(db, 'users', user.uid), userProfile);
+  } catch (error) {
+    console.error('Erreur lors de la création du profil:', error);
+  }
+};
+
+// Récupérer le profil utilisateur
+export const getUserProfile = async (uid: string): Promise<UserProfile | null> => {
+  try {
+    const docRef = doc(db, 'users', uid);
+    const docSnap = await getDoc(docRef);
+    
+    if (docSnap.exists()) {
+      return docSnap.data() as UserProfile;
+    }
+    return null;
+  } catch (error) {
+    console.error('Erreur lors de la récupération du profil:', error);
+    return null;
+  }
+};
+
+// Observer l'état d'authentification
+export const onAuthStateChange = (callback: (user: User | null) => void) => {
+  return onAuthStateChanged(auth, callback);
+};
+
+// Messages d'erreur en français
+const getErrorMessage = (errorCode: string): string => {
+  switch (errorCode) {
+    case 'auth/email-already-in-use':
+      return 'Cette adresse email est déjà utilisée';
+    case 'auth/weak-password':
+      return 'Le mot de passe doit contenir au moins 6 caractères';
+    case 'auth/invalid-email':
+      return 'Adresse email invalide';
+    case 'auth/user-not-found':
+      return 'Aucun compte trouvé avec cette adresse email';
+    case 'auth/wrong-password':
+      return 'Mot de passe incorrect';
+    case 'auth/too-many-requests':
+      return 'Trop de tentatives. Réessayez plus tard';
+    default:
+      return 'Une erreur est survenue. Veuillez réessayer';
+  }
+};

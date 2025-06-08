@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, ScrollView, TouchableOpacity, Alert, Platform } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  ScrollView,
+  TouchableOpacity,
+  Alert,
+  Platform,
+} from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import tw from 'twrnc';
 
@@ -10,21 +18,41 @@ export default function PhysiotherapyForm() {
     dateOfBirth: '',
     phone: '',
     email: '',
+    address: '',
+    insurance: '',
+    insuranceNumber: '',
+    referral: '',
+    occupation: '',
+    emergencyContact: '',
+    emergencyPhone: '',
     pathology: '',
     painLocation: '',
     painLevel: '1',
     painStart: '',
+    painFrequency: '',
+    symptomsDescription: '',
+    factorsWorsening: '',
+    factorsImproving: '',
     previousTreatments: '',
     medicalHistory: '',
+    surgeries: '',
     medications: '',
   });
 
-  const pathologies = ["Rééducation", "Ostéopathie", "Massage"];
-
+  const pathologies = ['Rééducation', 'Ostéopathie', 'Massage'];
   const painLocations = [
-    { category: "Articulations", locations: ["Épaule", "Coude", "Poignet", "Hanche", "Genou", "Cheville"] },
-    { category: "Colonne vertébrale", locations: ["Cou", "Dos", "Taille"] },
-    { category: "Autres", locations: ["Scoliose"] }
+    {
+      category: 'Articulations',
+      locations: ['Épaule', 'Coude', 'Poignet', 'Hanche', 'Genou', 'Cheville'],
+    },
+    {
+      category: 'Colonne vertébrale',
+      locations: ['Cou', 'Dos', 'Taille'],
+    },
+    {
+      category: 'Autres',
+      locations: ['Scoliose'],
+    },
   ];
 
   const handleChange = (field: string, value: string) => {
@@ -33,12 +61,12 @@ export default function PhysiotherapyForm() {
 
   const handleSubmit = () => {
     if (!formData.firstName || !formData.lastName || !formData.pathology || !formData.painLocation) {
-      Alert.alert("Champs manquants", "Veuillez remplir tous les champs obligatoires (*)");
+      Alert.alert('Champs manquants', 'Veuillez remplir tous les champs obligatoires (*)');
       return;
     }
 
-    console.log("Formulaire soumis:", formData);
-    Alert.alert("Merci", "Votre physiothérapeute examinera vos informations avant votre rendez-vous.");
+    console.log('Formulaire soumis:', formData);
+    Alert.alert('Merci', 'Votre physiothérapeute examinera vos informations.');
   };
 
   return (
@@ -47,58 +75,70 @@ export default function PhysiotherapyForm() {
         Consultation de Physiothérapie
       </Text>
 
-         <View style={tw`bg-white p-4 mb-6 rounded-lg shadow`}>
+      
+      <View style={tw`bg-white p-4 mb-6 rounded-lg shadow`}>
         <Text style={tw`text-lg font-semibold text-blue-700 mb-4 border-b pb-2`}>
           Informations Personnelles
         </Text>
 
-        <Text style={tw`text-sm font-medium text-gray-700 mb-1`}>Prénom *</Text>
+        {[
+          { label: 'Prénom *', field: 'firstName', placeholder: 'Votre prénom' },
+          { label: 'Nom *', field: 'lastName', placeholder: 'Votre nom' },
+          { label: 'Date de naissance', field: 'dateOfBirth', placeholder: 'JJ/MM/AAAA' },
+          { label: 'Téléphone', field: 'phone', placeholder: 'Votre numéro', keyboardType: 'phone-pad' },
+          { label: 'Email', field: 'email', placeholder: 'Votre email', keyboardType: 'email-address' },
+          { label: 'Adresse', field: 'address', placeholder: 'Votre adresse' },
+          { label: 'Profession', field: 'occupation', placeholder: 'Votre profession' },
+          { label: 'Personne à contacter en urgence', field: 'emergencyContact', placeholder: 'Nom de la personne' },
+          { label: 'Téléphone de la personne à contacter', field: 'emergencyPhone', placeholder: 'Numéro', keyboardType: 'phone-pad' },
+        ].map((input, idx) => (
+          <View key={idx}>
+            <Text style={tw`text-sm font-medium text-gray-700 mb-1`}>{input.label}</Text>
+            <TextInput
+              style={tw`border border-gray-300 rounded-md p-2 mb-4`}
+              value={formData[input.field as keyof typeof formData]}
+              onChangeText={(text) => handleChange(input.field, text)}
+              placeholder={input.placeholder}
+              keyboardType={input.keyboardType as any}
+            />
+          </View>
+        ))}
+      </View>
+
+      <View style={tw`bg-white p-4 mb-6 rounded-lg shadow`}>
+        <Text style={tw`text-lg font-semibold text-blue-700 mb-4 border-b pb-2`}>
+          Informations Médicales
+        </Text>
+
+        <Text style={tw`text-sm font-medium text-gray-700 mb-1`}>Assurance</Text>
         <TextInput
           style={tw`border border-gray-300 rounded-md p-2 mb-4`}
-          value={formData.firstName}
-          onChangeText={(text) => handleChange('firstName', text)}
-          placeholder="Votre prénom"
+          value={formData.insurance}
+          onChangeText={(text) => handleChange('insurance', text)}
+          placeholder="Nom de l'assurance"
         />
 
-        <Text style={tw`text-sm font-medium text-gray-700 mb-1`}>Nom *</Text>
+        <Text style={tw`text-sm font-medium text-gray-700 mb-1`}>Numéro de l'assurance</Text>
         <TextInput
           style={tw`border border-gray-300 rounded-md p-2 mb-4`}
-          value={formData.lastName}
-          onChangeText={(text) => handleChange('lastName', text)}
-          placeholder="Votre nom"
+          value={formData.insuranceNumber}
+          onChangeText={(text) => handleChange('insuranceNumber', text)}
+          placeholder="Numéro de police"
         />
 
-        <Text style={tw`text-sm font-medium text-gray-700 mb-1`}>Date de naissance</Text>
+        <Text style={tw`text-sm font-medium text-gray-700 mb-1`}>Référé par</Text>
         <TextInput
           style={tw`border border-gray-300 rounded-md p-2 mb-4`}
-          value={formData.dateOfBirth}
-          onChangeText={(text) => handleChange('dateOfBirth', text)}
-          placeholder="JJ/MM/AAAA"
-        />
-
-        <Text style={tw`text-sm font-medium text-gray-700 mb-1`}>Téléphone</Text>
-        <TextInput
-          style={tw`border border-gray-300 rounded-md p-2 mb-4`}
-          value={formData.phone}
-          onChangeText={(text) => handleChange('phone', text)}
-          keyboardType="phone-pad"
-          placeholder="Votre numéro"
-        />
-
-        <Text style={tw`text-sm font-medium text-gray-700 mb-1`}>Email</Text>
-        <TextInput
-          style={tw`border border-gray-300 rounded-md p-2`}
-          value={formData.email}
-          onChangeText={(text) => handleChange('email', text)}
-          keyboardType="email-address"
-          placeholder="Votre email"
+          value={formData.referral}
+          onChangeText={(text) => handleChange('referral', text)}
+          placeholder="Médecin, autre thérapeute, etc."
         />
       </View>
 
       
       <View style={tw`bg-white p-4 mb-6 rounded-lg shadow`}>
         <Text style={tw`text-lg font-semibold text-blue-700 mb-4 border-b pb-2`}>
-          Pathologie à traiter *
+          Détails de la Douleur et Pathologie *
         </Text>
 
         <View style={tw`flex-row justify-between mb-4`}>
@@ -110,7 +150,11 @@ export default function PhysiotherapyForm() {
               }`}
               onPress={() => handleChange('pathology', item)}
             >
-              <Text style={tw`text-center ${formData.pathology === item ? 'text-white font-bold' : 'text-gray-700'}`}>
+              <Text
+                style={tw`text-center ${
+                  formData.pathology === item ? 'text-white font-bold' : 'text-gray-700'
+                }`}
+              >
                 {item}
               </Text>
             </TouchableOpacity>
@@ -133,71 +177,63 @@ export default function PhysiotherapyForm() {
           </Picker>
         </View>
 
-        <Text style={tw`text-sm font-medium text-gray-700 mb-1`}>Niveau de douleur (1-10)</Text>
-        <TextInput
-          style={tw`border border-gray-300 rounded-md p-2 mb-4`}
-          keyboardType="numeric"
-          value={formData.painLevel}
-          onChangeText={(text) => handleChange('painLevel', text)}
-        />
-
-        <Text style={tw`text-sm font-medium text-gray-700 mb-1`}>Début des symptômes</Text>
-        <TextInput
-          style={tw`border border-gray-300 rounded-md p-2`}
-          value={formData.painStart}
-          onChangeText={(text) => handleChange('painStart', text)}
-          placeholder="Depuis quand avez-vous mal ?"
-        />
+        {[
+          { label: 'Niveau de douleur (1-10)', field: 'painLevel', keyboardType: 'numeric' },
+          { label: 'Début des symptômes', field: 'painStart', placeholder: 'Depuis quand avez-vous mal ?' },
+          { label: 'Fréquence des douleurs', field: 'painFrequency', placeholder: 'Ex: tous les jours, occasionnellement' },
+          { label: 'Description des symptômes', field: 'symptomsDescription' },
+          { label: 'Facteurs aggravants', field: 'factorsWorsening' },
+          { label: 'Facteurs améliorants', field: 'factorsImproving' },
+        ].map((input, idx) => (
+          <View key={idx}>
+            <Text style={tw`text-sm font-medium text-gray-700 mb-1`}>{input.label}</Text>
+            <TextInput
+              style={tw`border border-gray-300 rounded-md p-2 mb-4`}
+              value={formData[input.field as keyof typeof formData]}
+              onChangeText={(text) => handleChange(input.field, text)}
+              placeholder={input.placeholder}
+              keyboardType={input.keyboardType as any}
+            />
+          </View>
+        ))}
       </View>
 
-      
+     
       <View style={tw`bg-white p-4 mb-6 rounded-lg shadow`}>
         <Text style={tw`text-lg font-semibold text-blue-700 mb-4 border-b pb-2`}>
-          Informations médicales
+          Antécédents Médicaux
         </Text>
 
-        <Text style={tw`text-sm font-medium text-gray-700 mb-1`}>Traitements précédents</Text>
-        <TextInput
-          multiline
-          numberOfLines={3}
-          style={tw`border border-gray-300 rounded-md p-2 mb-4`}
-          value={formData.previousTreatments}
-          onChangeText={(text) => handleChange('previousTreatments', text)}
-          placeholder="Avez-vous déjà reçu des traitements pour ce problème ?"
-        />
-
-        <Text style={tw`text-sm font-medium text-gray-700 mb-1`}>Antécédents médicaux</Text>
-        <TextInput
-          multiline
-          numberOfLines={3}
-          style={tw`border border-gray-300 rounded-md p-2 mb-4`}
-          value={formData.medicalHistory}
-          onChangeText={(text) => handleChange('medicalHistory', text)}
-          placeholder="Chirurgies, maladies chroniques"
-        />
-
-        <Text style={tw`text-sm font-medium text-gray-700 mb-1`}>Médicaments actuels</Text>
-        <TextInput
-          multiline
-          numberOfLines={3}
-          style={tw`border border-gray-300 rounded-md p-2`}
-          value={formData.medications}
-          onChangeText={(text) => handleChange('medications', text)}
-          placeholder="Médicaments que vous prenez"
-        />
+        {[
+          { label: 'Traitements précédents', field: 'previousTreatments', placeholder: 'Avez-vous reçu des traitements ?' },
+          { label: 'Antécédents médicaux', field: 'medicalHistory', placeholder: 'Maladies chroniques, allergies' },
+          { label: 'Chirurgies', field: 'surgeries', placeholder: 'Chirurgies passées' },
+          { label: 'Médicaments actuels', field: 'medications', placeholder: 'Traitements en cours' },
+        ].map((input, idx) => (
+          <View key={idx}>
+            <Text style={tw`text-sm font-medium text-gray-700 mb-1`}>{input.label}</Text>
+            <TextInput
+              multiline
+              numberOfLines={3}
+              style={tw`border border-gray-300 rounded-md p-2 mb-4`}
+              value={formData[input.field as keyof typeof formData]}
+              onChangeText={(text) => handleChange(input.field, text)}
+              placeholder={input.placeholder}
+            />
+          </View>
+        ))}
       </View>
 
+   
       <TouchableOpacity
         onPress={handleSubmit}
         style={tw`bg-blue-600 py-3 rounded-lg shadow-md`}
       >
-        <Text style={tw`text-center text-white text-lg font-bold`}>
-          Soumettre
-        </Text>
+        <Text style={tw`text-center text-white text-lg font-bold`}>Soumettre</Text>
       </TouchableOpacity>
 
       <Text style={tw`text-gray-500 mt-4 text-center text-xs`}>
-        Champs obligatoires
+         Champs obligatoires
       </Text>
     </ScrollView>
   );
