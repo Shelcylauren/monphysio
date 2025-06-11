@@ -16,13 +16,15 @@ import {
 } from 'firebase/firestore';
 
 // Configuration Firebase - Remplacez par vos propres clés
+
 const firebaseConfig = {
-  apiKey: "your-api-key",
-  authDomain: "your-project.firebaseapp.com",
-  projectId: "your-project-id",
-  storageBucket: "your-project.appspot.com",
-  messagingSenderId: "123456789",
-  appId: "your-app-id"
+  apiKey: "AIzaSyBAhq9ZxlfocpsakI9PodA6GR8800fvDvc",
+  authDomain: "monphysio-116b8.firebaseapp.com",
+  projectId: "monphysio-116b8",
+  storageBucket: "monphysio-116b8.firebasestorage.app",
+  messagingSenderId: "869657830408",
+  appId: "1:869657830408:web:38baeec1045eec41b61dbd",
+  measurementId: "G-GDTRB2D0KB"
 };
 
 // Initialisation Firebase
