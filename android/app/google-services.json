@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "869657830408",
+    "project_id": "monphysio-116b8",
+    "storage_bucket": "monphysio-116b8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:869657830408:android:fa1ee0b1d6da6f87b61dbd",
+        "android_client_info": {
+          "package_name": "com.monphysio.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBXFuByS7ujctvEc-6gwEC6sXRKHbYembM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

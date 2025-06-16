@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Dimensions, ScrollView, Text } from 'react-native';
-import Header from '@/components/Header'; // Vérifie que le chemin est bon
+import Header from '@/Components/Header'; // Vérifie que le chemin est bon
 
 export default function HomeScreen() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

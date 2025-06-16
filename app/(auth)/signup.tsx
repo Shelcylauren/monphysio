@@ -2,7 +2,7 @@ import { Text, TextInput, TouchableOpacity, View, Alert } from 'react-native'
 import React from 'react'
 import { Link, useRouter } from 'expo-router'
 import tw from 'twrnc';
-import CustomTextInput from '@/components/CustomInputText';
+import CustomTextInput from '@/Components/CustomInputText';
 import { MaterialIcons } from '@expo/vector-icons';
 import { signUp } from '@/app/Firebase/firebase'; // Ajustez le chemin selon votre structure
 

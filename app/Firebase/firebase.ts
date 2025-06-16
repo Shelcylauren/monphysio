@@ -1,19 +1,28 @@
 // firebase.ts
-import { initializeApp } from 'firebase/app';
+// import { initializeApp } from 'firebase/app';
+// import { 
+//   getAuth, 
+//   createUserWithEmailAndPassword,
+//   signInWithEmailAndPassword,
+//   signOut,
+//   onAuthStateChanged,
+//   User
+// } from 'firebase/auth';
+// import { 
+//   getFirestore, 
+//   doc, 
+//   setDoc, 
+//   getDoc 
+// } from 'firebase/firestore';
+
 import { 
   getAuth, 
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  User
-} from 'firebase/auth';
-import { 
-  getFirestore, 
-  doc, 
-  setDoc, 
-  getDoc 
-} from 'firebase/firestore';
+  // User
+} from '@react-native-firebase/auth';
 
 // Configuration Firebase - Remplacez par vos propres clés
 
@@ -28,9 +37,9 @@ const firebaseConfig = {
 };
 
 // Initialisation Firebase
-const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
-export const db = getFirestore(app);
+// const app = initializeApp(firebaseConfig);
+// export const auth = getAuth(app);
+// export const db = getFirestore(app);
 
 // Types
 export interface UserProfile {
@@ -41,13 +50,14 @@ export interface UserProfile {
 }
 
 // Fonctions d'authentification
-export const signUp = async (email: string, password: string): Promise<User> => {
+export const signUp = async (email: string, password: string): Promise<any> => {
   try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    // console.log("Testing 1")
+    const userCredential = await createUserWithEmailAndPassword(getAuth(), email, password);
     const user = userCredential.user;
     
     // Créer le profil utilisateur dans Firestore
-    await createUserProfile(user);
+    // await createUserProfile(user);
     
     return user;
   } catch (error: any) {
@@ -55,9 +65,9 @@ export const signUp = async (email: string, password: string): Promise<User> => 
   }
 };
 
-export const signIn = async (email: string, password: string): Promise<User> => {
+export const signIn = async (email: string, password: string): Promise<any> => {
   try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const userCredential = await signInWithEmailAndPassword(getAuth(), email, password);
     return userCredential.user;
   } catch (error: any) {
     throw new Error(getErrorMessage(error.code));
@@ -66,46 +76,46 @@ export const signIn = async (email: string, password: string): Promise<User> => 
 
 export const logOut = async (): Promise<void> => {
   try {
-    await signOut(auth);
+    await signOut(getAuth());
   } catch (error: any) {
     throw new Error('Erreur lors de la déconnexion');
   }
 };
 
 // Créer le profil utilisateur dans Firestore
-const createUserProfile = async (user: User): Promise<void> => {
-  try {
-    const userProfile: UserProfile = {
-      uid: user.uid,
-      email: user.email!,
-      createdAt: new Date(),
-    };
+// const createUserProfile = async (user: any): Promise<void> => {
+//   try {
+//     const userProfile: UserProfile = {
+//       uid: user.uid,
+//       email: user.email!,
+//       createdAt: new Date(),
+//     };
     
-    await setDoc(doc(db, 'users', user.uid), userProfile);
-  } catch (error) {
-    console.error('Erreur lors de la création du profil:', error);
-  }
-};
+//     await setDoc(doc(db, 'users', user.uid), userProfile);
+//   } catch (error) {
+//     console.error('Erreur lors de la création du profil:', error);
+//   }
+// };
 
 // Récupérer le profil utilisateur
-export const getUserProfile = async (uid: string): Promise<UserProfile | null> => {
-  try {
-    const docRef = doc(db, 'users', uid);
-    const docSnap = await getDoc(docRef);
+// export const getUserProfile = async (uid: string): Promise<UserProfile | null> => {
+//   try {
+//     const docRef = doc(db, 'users', uid);
+//     const docSnap = await getDoc(docRef);
     
-    if (docSnap.exists()) {
-      return docSnap.data() as UserProfile;
-    }
-    return null;
-  } catch (error) {
-    console.error('Erreur lors de la récupération du profil:', error);
-    return null;
-  }
-};
+//     if (docSnap.exists()) {
+//       return docSnap.data() as UserProfile;
+//     }
+//     return null;
+//   } catch (error) {
+//     console.error('Erreur lors de la récupération du profil:', error);
+//     return null;
+//   }
+// };
 
 // Observer l'état d'authentification
-export const onAuthStateChange = (callback: (user: User | null) => void) => {
-  return onAuthStateChanged(auth, callback);
+export const onAuthStateChange = (callback: (user: any | null) => void) => {
+  return onAuthStateChanged(getAuth(), callback);
 };
 
 // Messages d'erreur en français

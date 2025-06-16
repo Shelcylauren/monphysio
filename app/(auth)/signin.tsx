@@ -3,7 +3,7 @@ import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { Link } from 'expo-router';
 import tw from 'twrnc';
 import { useUserAuth } from '@/store/useUserAuth';
-import CustomTextInput from '@/components/CustomInputText';
+import CustomTextInput from '@/Components/CustomInputText';
 import { MaterialIcons } from '@expo/vector-icons';
 
 interface FormData {

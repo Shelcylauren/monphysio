@@ -15,7 +15,7 @@ const data = [
 export default function Recommendation() {
     return (
         <View>
-            <Text style={tw`text-lg font-bold text-gray-800`}>Recommendation</Text>
+            <Text style={tw`text-lg font-bold text-gray-800`}>Categories</Text>
             <FlatList
                 data={data}
                 renderItem={({ item }) => (

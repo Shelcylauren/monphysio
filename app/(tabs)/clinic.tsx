@@ -1,12 +1,12 @@
 import { StyleSheet, Image, Platform } from 'react-native';
 
-import Collapsible from '@/components/Collapsible';
+import Collapsible from '@/Components/Collapsible';
 
-import { ExternalLink } from '@/components/ExternalLink';
-import ParallaxScrollView from '@/components/MedicaleForm';
-import { ThemedText } from '@/components/ThemedText';
-import { ThemedView } from '@/components/ThemedView';
-import { IconSymbol } from '@/components/ui/IconSymbol';
+import { ExternalLink } from '@/Components/ExternalLink';
+import ParallaxScrollView from '@/Components/MedicaleForm';
+import { ThemedText } from '@/Components/ThemedText';
+import { ThemedView } from '@/Components/ThemedView';
+import { IconSymbol } from '@/Components/ui/IconSymbol';
 
 export default function Clinic() {
   return (

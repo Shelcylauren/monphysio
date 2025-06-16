@@ -1,5 +1,5 @@
-import AuthFooter from '@/components/AuthFooter';
-import AuthHeader from '@/components/AuthHeader';
+import AuthFooter from '@/Components/AuthFooter';
+import AuthHeader from '@/Components/AuthHeader';
 import { Slot, Stack } from 'expo-router';
 
 export default function Layout() {

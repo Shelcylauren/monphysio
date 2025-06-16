@@ -2,11 +2,11 @@ import { Platform, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'r
 import React, { useRef, useState } from 'react'
 import tw from 'twrnc';
 import { ProgressSteps, ProgressStep } from 'react-native-progress-steps';
-import CustomTextInput from '@/components/CustomInputText';
+import CustomTextInput from '@/Components/CustomInputText';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { MaterialIcons } from '@expo/vector-icons';
-import Form from '@/components/Form';
-import BGCircle from '@/components/BGCircle';
+import Form from '@/Components/Form';
+import BGCircle from '@/Components/BGCircle';
 import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { Picker } from '@react-native-picker/picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';

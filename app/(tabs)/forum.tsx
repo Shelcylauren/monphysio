@@ -2,10 +2,10 @@
 
 import { Text, View } from 'react-native'
 import React from 'react'
-import ForumHeader from '@/components/ForumHeader'
-import ForumList from '@/components/ForumList'
+import ForumHeader from '@/Components/ForumHeader'
+import ForumList from '@/Components/ForumList'
 import tw from 'twrnc'
-import BGCircle from '@/components/BGCircle'
+import BGCircle from '@/Components/BGCircle'
 
 export default function Forum() {
     return (

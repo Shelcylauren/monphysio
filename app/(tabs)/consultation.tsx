@@ -1,9 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import tw from 'twrnc';
-import AvailableDoctors from '@/components/AvailableDoctors';
-import PopularDoctors from '@/components/PopularDoctors';
-import BGCircle from '@/components/BGCircle';
+import AvailableDoctors from '@/Components/AvailableDoctors';
+import PopularDoctors from '@/Components/PopularDoctors';
+import BGCircle from '@/Components/BGCircle';
 
 export default function consultation() {
   return (
