@@ -1,47 +1,37 @@
 // firebase.ts
-// import { initializeApp } from 'firebase/app';
-// import { 
-//   getAuth, 
-//   createUserWithEmailAndPassword,
-//   signInWithEmailAndPassword,
-//   signOut,
-//   onAuthStateChanged,
-//   User
-// } from 'firebase/auth';
-// import { 
-//   getFirestore, 
-//   doc, 
-//   setDoc, 
-//   getDoc 
-// } from 'firebase/firestore';
-
-import { 
-  getAuth, 
+import { initializeApp } from 'firebase/app';
+import {
+  getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
   onAuthStateChanged,
-  // User
-} from '@react-native-firebase/auth';
+  User
+} from 'firebase/auth';
+import {
+  getFirestore,
+  doc,
+  setDoc,
+  getDoc
+} from 'firebase/firestore';
 
-// Configuration Firebase - Remplacez par vos propres clés
-
+// Configuration Firebase
 const firebaseConfig = {
   apiKey: "AIzaSyBAhq9ZxlfocpsakI9PodA6GR8800fvDvc",
   authDomain: "monphysio-116b8.firebaseapp.com",
   projectId: "monphysio-116b8",
-  storageBucket: "monphysio-116b8.firebasestorage.app",
+  storageBucket: "monphysio-116b8.appspot.com",
   messagingSenderId: "869657830408",
   appId: "1:869657830408:web:38baeec1045eec41b61dbd",
   measurementId: "G-GDTRB2D0KB"
 };
 
-// Initialisation Firebase
-// const app = initializeApp(firebaseConfig);
-// export const auth = getAuth(app);
-// export const db = getFirestore(app);
 
-// Types
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+
 export interface UserProfile {
   uid: string;
   email: string;
@@ -49,76 +39,70 @@ export interface UserProfile {
   displayName?: string;
 }
 
-// Fonctions d'authentification
-export const signUp = async (email: string, password: string): Promise<any> => {
+
+export const signUp = async (email: string, password: string): Promise<User> => {
   try {
-    // console.log("Testing 1")
-    const userCredential = await createUserWithEmailAndPassword(getAuth(), email, password);
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
-    
-    // Créer le profil utilisateur dans Firestore
-    // await createUserProfile(user);
-    
+    await createUserProfile(user);
     return user;
   } catch (error: any) {
     throw new Error(getErrorMessage(error.code));
   }
 };
 
-export const signIn = async (email: string, password: string): Promise<any> => {
+// 
+export const signIn = async (email: string, password: string): Promise<User> => {
   try {
-    const userCredential = await signInWithEmailAndPassword(getAuth(), email, password);
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
     return userCredential.user;
   } catch (error: any) {
     throw new Error(getErrorMessage(error.code));
   }
 };
 
+
 export const logOut = async (): Promise<void> => {
   try {
-    await signOut(getAuth());
-  } catch (error: any) {
+    await signOut(auth);
+  } catch {
     throw new Error('Erreur lors de la déconnexion');
   }
 };
 
-// Créer le profil utilisateur dans Firestore
-// const createUserProfile = async (user: any): Promise<void> => {
-//   try {
-//     const userProfile: UserProfile = {
-//       uid: user.uid,
-//       email: user.email!,
-//       createdAt: new Date(),
-//     };
-    
-//     await setDoc(doc(db, 'users', user.uid), userProfile);
-//   } catch (error) {
-//     console.error('Erreur lors de la création du profil:', error);
-//   }
-// };
 
-// Récupérer le profil utilisateur
-// export const getUserProfile = async (uid: string): Promise<UserProfile | null> => {
-//   try {
-//     const docRef = doc(db, 'users', uid);
-//     const docSnap = await getDoc(docRef);
-    
-//     if (docSnap.exists()) {
-//       return docSnap.data() as UserProfile;
-//     }
-//     return null;
-//   } catch (error) {
-//     console.error('Erreur lors de la récupération du profil:', error);
-//     return null;
-//   }
-// };
-
-// Observer l'état d'authentification
-export const onAuthStateChange = (callback: (user: any | null) => void) => {
-  return onAuthStateChanged(getAuth(), callback);
+const createUserProfile = async (user: User): Promise<void> => {
+  try {
+    const userProfile: UserProfile = {
+      uid: user.uid,
+      email: user.email!,
+      createdAt: new Date(),
+      displayName: user.displayName || ''
+    };
+    await setDoc(doc(db, 'users', user.uid), userProfile);
+  } catch (error) {
+    console.error('Erreur création du profil:', error);
+  }
 };
 
-// Messages d'erreur en français
+// 👁️ Récupération du profil utilisateur
+export const getUserProfile = async (uid: string): Promise<UserProfile | null> => {
+  try {
+    const docRef = doc(db, 'users', uid);
+    const docSnap = await getDoc(docRef);
+    return docSnap.exists() ? (docSnap.data() as UserProfile) : null;
+  } catch (error) {
+    console.error('Erreur récupération profil:', error);
+    return null;
+  }
+};
+
+// 🎯 État de connexion
+export const onAuthStateChange = (callback: (user: User | null) => void) => {
+  return onAuthStateChanged(auth, callback);
+};
+
+// 💬 Gestion des messages d'erreur
 const getErrorMessage = (errorCode: string): string => {
   switch (errorCode) {
     case 'auth/email-already-in-use':
@@ -137,3 +121,6 @@ const getErrorMessage = (errorCode: string): string => {
       return 'Une erreur est survenue. Veuillez réessayer';
   }
 };
+
+
+export { auth, db, app };
