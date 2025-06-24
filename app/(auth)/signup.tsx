@@ -2,9 +2,13 @@ import { Text, TextInput, TouchableOpacity, View, Alert } from 'react-native'
 import React from 'react'
 import { Link, useRouter } from 'expo-router'
 import tw from 'twrnc';
-import CustomTextInput from '@/Components/CustomInputText';
+import CustomTextInput from '@/components/CustomInputText';
 import { MaterialIcons } from '@expo/vector-icons';
-import { signUp } from '@/app/Firebase/firebase'; // Ajustez le chemin selon votre structure
+import { auth, db} from '@/app/Firebase/firebase'; // Ajustez le chemin selon votre structure
+import { doc, setDoc } from '@firebase/firestore';
+import { UserProfile } from '@/constants/types';
+import { createUserWithEmailAndPassword, User } from '@firebase/auth';
+import { getErrorMessage } from '@/hooks/useErrorMessage';
 
 interface FormData {
     email: string;
@@ -17,6 +21,31 @@ interface FormErrors {
     password?: string;
     confirmPassword?: string;
 }
+
+const createUserProfile = async (user: User): Promise<void> => {
+  try {
+    const userProfile: UserProfile = {
+      uid: user.uid,
+      email: user.email!,
+      createdAt: new Date(),
+      displayName: user.displayName || ''
+    };
+    await setDoc(doc(db, 'users', user.uid), userProfile);
+  } catch (error) {
+    console.error('Erreur création du profil:', error);
+  }
+};
+
+export const signUp = async (email: string, password: string): Promise<User> => {
+  try {
+    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    await createUserProfile(user);
+    return user;
+  } catch (error: any) {
+    throw new Error(getErrorMessage(error.code));
+  }
+};
 
 export default function signup() {
     const emailRef = React.useRef<TextInput>(null);
