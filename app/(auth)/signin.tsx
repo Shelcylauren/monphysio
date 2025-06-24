@@ -3,13 +3,26 @@ import { View, Text, TouchableOpacity, TextInput } from 'react-native';
 import { Link } from 'expo-router';
 import tw from 'twrnc';
 import { useUserAuth } from '@/store/useUserAuth';
-import CustomTextInput from '@/Components/CustomInputText';
+import CustomTextInput from '@/components/CustomInputText';
 import { MaterialIcons } from '@expo/vector-icons';
+import { signInWithEmailAndPassword, User } from '@firebase/auth';
+import { getErrorMessage } from '@/hooks/useErrorMessage';
+import { auth } from '@/app/Firebase/firebase';
 
 interface FormData {
     email: string;
     password: string;
 }
+
+// 
+export const signIn = async (email: string, password: string): Promise<User> => {
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    return userCredential.user;
+  } catch (error: any) {
+    throw new Error(getErrorMessage(error.code));
+  }
+};
 
 
 export default function Signin() {

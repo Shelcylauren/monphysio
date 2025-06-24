@@ -1,11 +1,11 @@
 import { StyleSheet, Image, Platform } from 'react-native';
 
-import Collapsible from '@/Components/Collapsible';
-import { ExternalLink } from '@/Components/ExternalLink';
-import ParallaxScrollView from '@/Components/MedicaleForm';
-import { ThemedText } from '@/Components/ThemedText';
-import { ThemedView } from '@/Components/ThemedView';
-import { IconSymbol } from '@/Components/ui/IconSymbol';
+import Collapsible from '@/components/Collapsible';
+import { ExternalLink } from '@/components/ExternalLink';
+import ParallaxScrollView from '@/components/MedicaleForm';
+import { ThemedText } from '@/components/ThemedText';
+import { ThemedView } from '@/components/ThemedView';
+import { IconSymbol } from '@/components/ui/IconSymbol';
 
 export default function Clinic() {
   return (
@@ -20,9 +20,9 @@ export default function Clinic() {
       }
     >
       <ThemedView className="flex-1 px-4" lightColor="#eff6ff" darkColor="#1e3a8a">
-        <ThemedText className="text-lg font-bold mb-2">Clinic</ThemedText>
+        <ThemedText className="mb-2 text-lg font-bold">Clinic</ThemedText>
         <Collapsible title="About the Clinic">
-          <ThemedText className="text-base mb-2">
+          <ThemedText className="mb-2 text-base">
             The clinic is a healthcare facility that provides medical and surgical care to patients.
             It may specialize in a specific field such as pediatrics, orthopedics, or dermatology.
           </ThemedText>
