@@ -1,5 +1,5 @@
 
-import { auth, db } from '@/app/Firebase/firebase';
+import { auth, db } from '@/Firebase/firebase';
 import { doc, getDoc } from '@firebase/firestore';
 import {
   signOut,

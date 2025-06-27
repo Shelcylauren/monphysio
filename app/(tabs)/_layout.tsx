@@ -3,8 +3,8 @@ import { Redirect, Tabs } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { StatusBar } from 'expo-status-bar';
 import { useUserAuth } from '@/store/useUserAuth';
+import { StatusBar } from 'react-native';
   
 
 export default function TabLayout() {
@@ -18,6 +18,7 @@ export default function TabLayout() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
       <Tabs
         screenOptions={{
           headerShown: false,
@@ -70,7 +71,6 @@ export default function TabLayout() {
           }}
         />
       </Tabs>
-      <StatusBar style="dark" backgroundColor='#fff' />
     </SafeAreaView>
   );
 }

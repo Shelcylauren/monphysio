@@ -16,5 +16,5 @@
     ".expo/types/**/*.ts",
     "expo-env.d.ts",
     "nativewind-env.d.ts"
-, "app/Firebase/firebase.js"  ]
+, "Firebase/firebase.js"  ]
 }

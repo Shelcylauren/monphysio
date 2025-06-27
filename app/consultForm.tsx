@@ -11,6 +11,7 @@ import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { Picker } from '@react-native-picker/picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { format, formatDistance, formatRelative, subDays, subYears } from 'date-fns'
+import { router } from 'expo-router';
 
 interface FormData {
     firstName: string;
@@ -93,6 +94,10 @@ export default function consultForm() {
         password: false
     });
 
+ 
+    const [progressErrors, setProgressErrors] = useState(false);
+
+
 
 
     const handleChange = (field: keyof FormData, value: string): void => {
@@ -116,6 +121,37 @@ export default function consultForm() {
             toggleDatePicker();
         }
     }
+
+    const onNextStep = () => {
+        // Handle the next button click for the current step
+        console.log(`Next button clicked for step`);
+        // You can add validation logic here if needed
+        // For example, check if the required fields are filled
+        if (!formData.firstName || !formData.lastName || !formData.dateOfBirth || !formData.phone || !formData.email) {
+            // Show an error message or highlight the fields
+            setProgressErrors(true);
+            console.log('Please fill in all required fields');
+            return;
+        } else {
+            setProgressErrors(false);
+        }
+    }
+
+    const onsubmit = async () => {
+        try {
+                // Here you can handle the form submission, e.g., send data to your backend or AI
+                // Navigate to the next screen or perform any other actions
+                router.push('/(screens)/appointment');
+            } catch (error) {
+                console.error('Error signing in:', error);
+                // Handle the error, e.g., show an alert or a toast message
+                // alert(getErrorMessage(error));
+            }
+        }
+
+
+
+
     return (
 
         <View style={tw`relative flex-1 bg-white bg-blue-600`}>
@@ -127,6 +163,8 @@ export default function consultForm() {
                         label="Informations Personnelles"
                         buttonNextText={progressStepsButtonNextText}
                         buttonBottomOffset={buttonBottomOffset}
+                        onNext={onNextStep}
+                        errors={progressErrors}
                     >
                         <Text style={tw`pb-2 mb-4 text-lg font-semibold text-center text-blue-200 border-b`}>
                             Informations Personnelles
@@ -300,6 +338,7 @@ export default function consultForm() {
                         buttonPreviousText={progressStepsButtonPreviousText}
                         buttonFinishText={progressStepsButtonFinishText}
                         buttonBottomOffset={buttonBottomOffset}
+                        onSubmit={onsubmit}
                     >
                         <Text style={tw`pb-2 mb-4 text-lg font-semibold text-center text-blue-200 border-b`}>
                             Informations médicales

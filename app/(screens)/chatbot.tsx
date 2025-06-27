@@ -1,3 +1,4 @@
+import { router } from 'expo-router';
 import React, { useState, useEffect } from 'react';
 import {
   View,
@@ -12,6 +13,7 @@ import {
   StatusBar,
   Dimensions,
 } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const { width, height } = Dimensions.get('window');
 
@@ -36,7 +38,7 @@ interface PatientData {
   question: string;
 }
 
-const PhysioAssistant: React.FC = () => {
+const PhysioAssistant = () => {
   // États typés
   const [showChatbot, setShowChatbot] = useState<boolean>(false);
   const [selectedSymptoms, setSelectedSymptoms] = useState<string[]>([]);
@@ -359,6 +361,16 @@ const PhysioAssistant: React.FC = () => {
                   <Text style={styles.buttonText}>GET STARTED</Text>
                 </View>
               </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{marginTop: 20}}
+                onPress={() => router.back()}
+                activeOpacity={0.8}
+              >
+                <View>
+                  <Text style={styles.buttonText}>Back</Text>
+                </View>
+              </TouchableOpacity>
             </View>
           </ScrollView>
         </View>
@@ -386,7 +398,14 @@ const PhysioAssistant: React.FC = () => {
             <Text style={styles.headerSubtitle}>Your virtual assistant for physiotherapy</Text>
           </View>
 
-          <ScrollView style={styles.contentContainer}>
+          <KeyboardAwareScrollView
+            keyboardShouldPersistTaps="handled"
+            extraScrollHeight={100}
+            enableOnAndroid={true}
+            enableAutomaticScroll={true}
+            keyboardOpeningTime={0}
+            style={styles.contentContainer}
+          >
             {!showResults ? (
               // Form Section
               <View style={styles.formSection}>
@@ -404,23 +423,25 @@ const PhysioAssistant: React.FC = () => {
                 <View style={styles.formGroup}>
                   <Text style={styles.label}>Symptoms:</Text>
                   <View style={styles.symptomsList}>
-                    {symptoms.map((symptom: string, index: number) => (
-                      <TouchableOpacity
-                        key={`symptom-${index}`}
-                        style={[
-                          styles.symptomItem,
-                          selectedSymptoms.includes(symptom) && styles.symptomItemSelected
-                        ]}
-                        onPress={() => toggleSymptom(symptom)}
-                      >
-                        <Text style={[
-                          styles.symptomText,
-                          selectedSymptoms.includes(symptom) && styles.symptomTextSelected
-                        ]}>
-                          {symptom}
-                        </Text>
-                      </TouchableOpacity>
-                    ))}
+                    <ScrollView style={styles.symptomsScroll}>
+                      {symptoms.map((symptom: string, index: number) => (
+                        <TouchableOpacity
+                          key={`symptom-${index}`}
+                          style={[
+                            styles.symptomItem,
+                            selectedSymptoms.includes(symptom) && styles.symptomItemSelected
+                          ]}
+                          onPress={() => toggleSymptom(symptom)}
+                        >
+                          <Text style={[
+                            styles.symptomText,
+                            selectedSymptoms.includes(symptom) && styles.symptomTextSelected
+                          ]}>
+                            {symptom}
+                          </Text>
+                        </TouchableOpacity>
+                      ))}
+                    </ScrollView>
                   </View>
                 </View>
 
@@ -466,7 +487,7 @@ const PhysioAssistant: React.FC = () => {
               // Results Section
               renderResults()
             )}
-          </ScrollView>
+          </KeyboardAwareScrollView>
         </View>
       </View>
     </SafeAreaView>
@@ -486,7 +507,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 20,
+    padding: 5,
     minHeight: height,
   },
   heroContent: {
@@ -559,7 +580,7 @@ const styles = StyleSheet.create({
   },
   chatbotContainer: {
     flex: 1,
-    margin: 20,
+    margin: 0,
     backgroundColor: 'white',
     borderRadius: 20,
     overflow: 'hidden',
@@ -568,7 +589,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.3,
     shadowRadius: 30,
     elevation: 15,
-    maxHeight: height - 40,
+    // maxHeight: height - 40,
   },
   chatbotHeader: {
     padding: 20,
@@ -605,7 +626,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   formSection: {
-    padding: 30,
+    padding: 15,
   },
   formGroup: {
     marginBottom: 25,
@@ -630,11 +651,14 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
   },
   symptomsList: {
-    maxHeight: 200,
+    // height: "65%",
     borderWidth: 2,
     borderColor: '#e0e0e0',
     borderRadius: 10,
     backgroundColor: '#f8f9fa',
+  },
+  symptomsScroll: {
+    maxHeight: 200,
   },
   symptomItem: {
     padding: 15,
@@ -643,6 +667,7 @@ const styles = StyleSheet.create({
   },
   symptomItemSelected: {
     backgroundColor: '#00bcd4',
+    borderRadius: 10,
   },
   symptomText: {
     fontSize: 14,

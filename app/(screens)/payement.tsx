@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, ScrollView } from 'react-native';
 import { useTailwind } from 'tailwind-rn';
 import { collection, addDoc, getDocs } from 'firebase/firestore';
-import { db } from '../app/Firebase/firebase'; 
+import { db } from '@/Firebase/firebase';
 
 export default function PaymentScreen() {
   const tailwind = useTailwind();

@@ -4,11 +4,12 @@ import { Link, useRouter } from 'expo-router'
 import tw from 'twrnc';
 import CustomTextInput from '@/components/CustomInputText';
 import { MaterialIcons } from '@expo/vector-icons';
-import { auth, db} from '@/app/Firebase/firebase'; // Ajustez le chemin selon votre structure
 import { doc, setDoc } from '@firebase/firestore';
 import { UserProfile } from '@/constants/types';
 import { createUserWithEmailAndPassword, User } from '@firebase/auth';
 import { getErrorMessage } from '@/hooks/useErrorMessage';
+import { auth, db } from '@/Firebase/firebase';
+import useSignUpWithEmailAndPassword from '@/hooks/useSignUpWithEmailAndPassword';
 
 interface FormData {
     email: string;
@@ -22,30 +23,30 @@ interface FormErrors {
     confirmPassword?: string;
 }
 
-const createUserProfile = async (user: User): Promise<void> => {
-  try {
-    const userProfile: UserProfile = {
-      uid: user.uid,
-      email: user.email!,
-      createdAt: new Date(),
-      displayName: user.displayName || ''
-    };
-    await setDoc(doc(db, 'users', user.uid), userProfile);
-  } catch (error) {
-    console.error('Erreur création du profil:', error);
-  }
-};
+// const createUserProfile = async (user: User): Promise<void> => {
+//   try {
+//     const userProfile: UserProfile = {
+//       uid: user.uid,
+//       email: user.email!,
+//       createdAt: new Date(),
+//       displayName: user.displayName || ''
+//     };
+//     await setDoc(doc(db, 'users', user.uid), userProfile);
+//   } catch (error) {
+//     console.error('Erreur création du profil:', error);
+//   }
+// };
 
-export const signUp = async (email: string, password: string): Promise<User> => {
-  try {
-    const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-    const user = userCredential.user;
-    await createUserProfile(user);
-    return user;
-  } catch (error: any) {
-    throw new Error(getErrorMessage(error.code));
-  }
-};
+// export const signUpUser = async (email: string, password: string): Promise<User> => {
+//   try {
+//     const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+//     const user = userCredential.user;
+//     await createUserProfile(user);
+//     return user;
+//   } catch (error: any) {
+//     throw new Error(getErrorMessage(error.code));
+//   }
+// };
 
 export default function signup() {
     const emailRef = React.useRef<TextInput>(null);
@@ -61,6 +62,8 @@ export default function signup() {
     
     const [errors, setErrors] = React.useState<FormErrors>({});
     const [isLoading, setIsLoading] = React.useState(false);
+
+    const { signUp } = useSignUpWithEmailAndPassword();
 
     const handleChange = (name: keyof FormData, value: string) => {
         setFormData((prevState) => ({
@@ -111,14 +114,18 @@ export default function signup() {
         setIsLoading(true);
         
         try {
-            await signUp(formData.email, formData.password);
+            await signUp({
+                email: formData.email,
+                password: formData.password,
+            });
             Alert.alert(
                 'Succès',
                 'Compte créé avec succès !',
                 [
                     {
                         text: 'OK',
-                        onPress: () => router.push('/consultForm')
+                        // onPress: () => router.push('/consultForm')
+                        onPress: () => router.push('/(auth)/what_next')
                     }
                 ]
             );

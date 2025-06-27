@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, TextInput } from 'react-native';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 import tw from 'twrnc';
 import { useUserAuth } from '@/store/useUserAuth';
 import CustomTextInput from '@/components/CustomInputText';
 import { MaterialIcons } from '@expo/vector-icons';
 import { signInWithEmailAndPassword, User } from '@firebase/auth';
 import { getErrorMessage } from '@/hooks/useErrorMessage';
-import { auth } from '@/app/Firebase/firebase';
+import { auth } from '@/Firebase/firebase';
 
 interface FormData {
     email: string;
@@ -36,8 +36,9 @@ export default function Signin() {
     const hasOnboarded = useUserAuth((state) => state.toggleHasOnboarded);
 
     const handleSignin = () => {
-        console.log("Signin button pressed");
-        hasOnboarded(); // Toggle the onboarding state
+        // console.log("Signin button pressed");
+        router.push('/(screens)/pocket_doctor');
+        // hasOnboarded(); // Toggle the onboarding state
     }
 
     const handleChange = (name: keyof FormData, value: string) => {

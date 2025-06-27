@@ -472,6 +472,8 @@ const AppointmentBookingApp = () => {
   );
 };
 
+export default AppointmentBookingApp;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
