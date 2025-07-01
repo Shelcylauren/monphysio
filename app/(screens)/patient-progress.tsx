@@ -186,7 +186,7 @@ export default function PatientProgress(): React.JSX.Element {
   return (
     <SafeAreaView style={tw`flex-1 bg-gray-50`}>
       {/* Status Bar */}
-      <StatusBar backgroundColor="#3b82f6" barStyle="light-content" />
+      <StatusBar backgroundColor="#fff" barStyle="dark-content" />
       
       {/* Header */}
       <View style={tw`flex-row items-center p-4 bg-white border-b border-gray-200 shadow-sm`}>
