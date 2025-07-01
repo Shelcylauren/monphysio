@@ -4,7 +4,7 @@ import { Link, useRouter } from 'expo-router';
 import tw from 'twrnc';
 import Lottie from 'lottie-react-native';
 
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from 'react-native';
 import Onboarding from 'react-native-onboarding-swiper';
 
 

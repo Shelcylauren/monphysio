@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Image } from 'react-native';
 import tw from 'twrnc';
-import { StatusBar } from 'expo-status-bar';
+import { StatusBar } from 'react-native';
 
 export default function AuthHeader() {
     return (

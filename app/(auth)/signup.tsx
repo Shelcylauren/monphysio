@@ -6,7 +6,7 @@ import CustomTextInput from '@/components/CustomInputText';
 import { MaterialIcons } from '@expo/vector-icons';
 import { doc, setDoc } from '@firebase/firestore';
 import { UserProfile } from '@/constants/types';
-import { createUserWithEmailAndPassword, User } from '@firebase/auth';
+import { createUserWithEmailAndPassword, User } from 'firebase/auth';
 import { getErrorMessage } from '@/hooks/useErrorMessage';
 import { auth, db } from '@/Firebase/firebase';
 import useSignUpWithEmailAndPassword from '@/hooks/useSignUpWithEmailAndPassword';

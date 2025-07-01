@@ -6,11 +6,17 @@ import './../global.css';
 import StatusBarBackground from '@/components/StatusBarBackground';
 import { StatusBar } from 'react-native';
 
+const isLoggedIn: boolean = true;
+const isFirstTimeUser: boolean = true; // This should be replaced with actual logic to check if the user is logged in or not
+
 export default function RootLayout() {
   return (
-    <>
-      <StatusBar barStyle="light-content" backgroundColor="#1e90ff" />
-      <Stack>
+    <Stack>
+      <StatusBar barStyle="dark-content" backgroundColor="#1e90ff" />
+      <Stack.Protected guard={!isLoggedIn && isFirstTimeUser}>
+        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+      </Stack.Protected>
+      <Stack.Protected guard={isLoggedIn}>
         {/* Toutes les autres pages n'auront pas de header par défaut
           mais sera activer dans le _layout d (tabs) */}
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -19,7 +25,7 @@ export default function RootLayout() {
         <Stack.Screen name="onboarding" options={{ headerShown: false }} />
         <Stack.Screen name="consultForm" options={{ headerShown: false }} />
 
-      </Stack>
-    </>
+      </Stack.Protected>
+    </Stack>
   );
 }

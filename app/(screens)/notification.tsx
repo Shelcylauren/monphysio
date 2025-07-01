@@ -54,15 +54,15 @@ export default function NotificationScreen() {
       const isPast = apptTime.isBefore(now);
 
       if (daysDiff === 2) {
-        newNotifs.push(`⏳ Rappel : Vous avez un ${app.type === 'consultation' ? 'rendez-vous' : 'traitement'} dans 2 jours à ${apptTime.format('HH:mm')} avec Dr. ${app.doctor}`);
+        newNotifs.push(`⏳ Remember : You have a ${app.type === 'consultation' ? 'Appointment' : 'Treatment'} in two days at ${apptTime.format('HH:mm')} with Dr. ${app.doctor}`);
       }
 
       if (isToday && !isPast) {
-        newNotifs.push(`📅 Aujourd'hui : ${app.type === 'consultation' ? 'Rendez-vous' : 'Traitement'} à ${apptTime.format('HH:mm')} avec Dr. ${app.doctor}`);
+        newNotifs.push(`📅 Today : ${app.type === 'consultation' ? 'Appointment' : 'Treatment'} at ${apptTime.format('HH:mm')} with Dr. ${app.doctor}`);
       }
 
       if (isPast && !app.notifiedMissed) {
-        newNotifs.push(`⚠️ Manqué : Vous aviez un ${app.type} avec Dr. ${app.doctor} à ${apptTime.format('HH:mm')}.`);
+        newNotifs.push(`⚠️ Missed : You had a ${app.type} with Dr. ${app.doctor} at ${apptTime.format('HH:mm')}.`);
         return { ...app, notifiedMissed: true };
       }
 

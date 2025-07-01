@@ -1,4 +1,4 @@
-import { auth } from "@/firebaseConfig";
+import { auth } from "@/Firebase/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { Alert } from "react-native";
 import { useRouter } from "expo-router";
@@ -21,25 +21,26 @@ const useSigninWithEmailAndPassword = () => {
             // Signed in
             const user = userCredential.user;
             //check if user email is verified
-            if (!user.emailVerified) {
-                // showToast('Please verify your email before signing in!', 'error');
-                Alert.alert(
-                    'Email Verification Required',
-                    'Please verify your email before signing in.',
-                    [
-                        {
-                            text: 'OK',
-                            onPress: () => console.log('OK Pressed'),
-                        },
-                    ],
-                    { cancelable: false }
-                );
-                // Redirect to email verification page
-                router.push('/(auth)/emailVerification');
-            } else {
-                // User is signed in, redirect to home page
+            // if (!user.emailVerified) {
+            //     // showToast('Please verify your email before signing in!', 'error');
+            //     Alert.alert(
+            //         'Email Verification Required',
+            //         'Please verify your email before signing in.',
+            //         [
+            //             {
+            //                 text: 'OK',
+            //                 onPress: () => console.log('OK Pressed'),
+            //             },
+            //         ],
+            //         { cancelable: false }
+            //     );
+            //     // Redirect to email verification page
+            //     // router.push('/(auth)/emailVerification');
+            // } else {
+            //     // User is signed in, redirect to home page
+            //     router.replace('/');
+            // }
                 router.replace('/');
-            }
         } catch (error: unknown) {
             // Handle error using custom error handler
             handleError(error);

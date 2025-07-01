@@ -17,7 +17,7 @@ const data = [
 export default function ForumList() {
     return (
         <View style={tw`z-10 flex-1 mt-2`}>
-            <Text style={tw`text-xl font-bold text-gray-800`}>ForumList</Text>
+            <Text style={tw`pb-2 text-xl font-bold text-gray-800`}>ForumList</Text>
             <FlatList
                 data={data}
                 renderItem={({ item }) => (
@@ -30,7 +30,7 @@ export default function ForumList() {
 
                 )}
                 keyExtractor={item => item.id}
-                contentContainerStyle={tw`gap-4 py-4 px-2`}
+                contentContainerStyle={tw`gap-4 px-2 py-4`}
             />
         </View>
     )

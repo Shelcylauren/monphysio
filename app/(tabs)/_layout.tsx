@@ -12,13 +12,13 @@ export default function TabLayout() {
   const hasFinishedOnboarding = useUserAuth((state) => state.hasFinishedOnboarding);
 
   // Redirect to the onboarding screen if the user has not finished onboarding.
-  if (!hasFinishedOnboarding) {
-    return <Redirect href="/(auth)/signup" />
-  }
+  // if (!hasFinishedOnboarding) {
+  //   return <Redirect href="/(auth)/signup" />
+  // }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
+      <StatusBar barStyle="light-content" backgroundColor="#1e90ff" />
       <Tabs
         screenOptions={{
           headerShown: false,

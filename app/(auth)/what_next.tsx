@@ -15,7 +15,7 @@ export default function whatNext() {
     };
 
     const handleConsultLater = () => {
-        router.push('/')
+        router.push('/(tabs)')
     };
     
 
@@ -26,11 +26,10 @@ export default function whatNext() {
                 {/* Content */}
                 <View style={tw`items-center p-6 `}>
                     <Text style={tw`text-2xl font-semibold text-center text-gray-500`}>
-                        Bienvenue sur PhysioConsultation
+                        Welcome to Physio Consultation
                     </Text>
                     <Text style={tw`mt-1 text-sm text-center text-gray-500`}>
-                        Cette plateforme vous aide à consulter un spécialiste pour vos douleurs au nerf sciatique,
-                    obtenir un diagnostic intelligent, et suivre vos traitements facilement.
+                        This platform helps you consult a specialist for your sciatic nerve pain, Get an intelligent diagnosis, and follow your treatments easily.
                     </Text>
 
                     {/* Button View */}
@@ -41,7 +40,7 @@ export default function whatNext() {
                             activeOpacity={0.8}
                         >
                             <Text style={tw`text-base italic font-medium text-center text-white`}>
-                                Consultation Simple
+                            Simple consultation
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
@@ -50,7 +49,7 @@ export default function whatNext() {
                             activeOpacity={0.8}
                         >
                             <Text style={tw`text-base italic font-medium text-center text-blue-600`}>
-                                Consultation intelligente
+                                Intelligent consultation 
                             </Text>
                         </TouchableOpacity>
                         <TouchableOpacity
@@ -59,7 +58,7 @@ export default function whatNext() {
                             activeOpacity={0.8}
                         >
                             <Text style={tw`text-base italic font-medium text-center text-blue-600`}>
-                                Se consulter plus tard
+                                Consult later 
                             </Text>
                         </TouchableOpacity>
                     </View>

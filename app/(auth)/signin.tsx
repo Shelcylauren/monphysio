@@ -5,24 +5,16 @@ import tw from 'twrnc';
 import { useUserAuth } from '@/store/useUserAuth';
 import CustomTextInput from '@/components/CustomInputText';
 import { MaterialIcons } from '@expo/vector-icons';
-import { signInWithEmailAndPassword, User } from '@firebase/auth';
 import { getErrorMessage } from '@/hooks/useErrorMessage';
 import { auth } from '@/Firebase/firebase';
+import { signInWithEmailAndPassword, User } from 'firebase/auth';
+import useSigninWithEmailAndPassword from '@/hooks/useSigninWithEmailAndPassword';
 
 interface FormData {
     email: string;
     password: string;
 }
 
-// 
-export const signIn = async (email: string, password: string): Promise<User> => {
-  try {
-    const userCredential = await signInWithEmailAndPassword(auth, email, password);
-    return userCredential.user;
-  } catch (error: any) {
-    throw new Error(getErrorMessage(error.code));
-  }
-};
 
 
 export default function Signin() {
@@ -35,10 +27,15 @@ export default function Signin() {
     });
     const hasOnboarded = useUserAuth((state) => state.toggleHasOnboarded);
 
-    const handleSignin = () => {
+    const { signin, loading } = useSigninWithEmailAndPassword()
+
+    const handleSignin = async () => {
         // console.log("Signin button pressed");
-        router.push('/(screens)/pocket_doctor');
-        // hasOnboarded(); // Toggle the onboarding state
+        // router.push('/(screens)/pocket_doctor');
+        
+        await signin(formData.email, formData.password)
+        router.push('/(auth)/what_next');
+
     }
 
     const handleChange = (name: keyof FormData, value: string) => {
@@ -99,10 +96,19 @@ export default function Signin() {
                         style={tw`w-full px-6 py-3 mt-2 bg-blue-600 rounded-full`}
                         onPress={() => handleSignin()}
                         activeOpacity={0.8}
+                        disabled={loading}
                     >
-                        <Text style={tw`text-base italic font-medium text-center text-white`}>
-                            Sign in
-                        </Text>
+                        {
+                            loading ? (
+                                <Text style={tw`font-semibold text-center text-white`}>
+                                    Signing in...
+                                </Text>
+                            ) : (
+                                <Text style={tw`font-semibold text-center text-white`}>
+                                    Sign In
+                                </Text>
+                            )
+                        }
                     </TouchableOpacity>
                     <Text style={tw`mt-4 text-sm text-gray-500`}>
                         Don't have an account? {" "}

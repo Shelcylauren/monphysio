@@ -7,7 +7,7 @@ export default function Layout() {
     return (
         <>
             {/* Hide status bar */}
-            <StatusBar hidden/>
+            {/* <StatusBar hidden/> */}
             <Stack.Screen
                 options={{
                     headerShown: false,

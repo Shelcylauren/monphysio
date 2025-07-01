@@ -10,6 +10,8 @@ import {
   Dimensions,
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import  tw from 'twrnc';
+import { router } from 'expo-router';
 
 type CalendarDate = {
   day: number;
@@ -468,6 +470,16 @@ const AppointmentBookingApp = () => {
           </TouchableOpacity>
         </View>
       </View>
+      {/* Close Button */}
+      <TouchableOpacity
+        style={tw`w-full px-6 py-3 mt-2 bg-white rounded-full`}
+        onPress={() => router.replace('/(auth)/what_next')}
+        activeOpacity={0.8}
+      >
+        <Text style={tw`text-base italic font-medium text-center text-blue-600`}>
+          close
+        </Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };

@@ -18,7 +18,7 @@ export default function Layout() {
             <Stack.Screen name="payment" options={{ headerShown: false }} />
             <Stack.Screen name="userProfile" options={{ headerShown: false }} />
             <Stack.Screen name="treatment" options={{ headerShown: false }} />
-            <Stack.Screen name="history" options={{ headerShown: false }} />
+            <Stack.Screen name="medical-history" options={{ headerShown: false }} />
 
         </>
     );

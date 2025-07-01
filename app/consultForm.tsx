@@ -12,6 +12,7 @@ import { Picker } from '@react-native-picker/picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { format, formatDistance, formatRelative, subDays, subYears } from 'date-fns'
 import { router } from 'expo-router';
+import { Button } from 'react-native'; // Add this import if not already present
 
 interface FormData {
     firstName: string;
@@ -49,18 +50,18 @@ interface PickerValueChangeEvent {
     type: string;
 }
 
-const pathologies = ["Rééducation", "Ostéopathie", "Massage"];
+const pathologies = ["Rehabilitation", "Osteopathie", "Massage"];
 
 const painLocations = [
-    { category: "Articulations", locations: ["Épaule", "Coude", "Poignet", "Hanche", "Genou", "Cheville"] },
-    { category: "Colonne vertébrale", locations: ["Cou", "Dos", "Taille"] },
-    { category: "Autres", locations: ["Scoliose"] }
+    { category: "Articulations", locations: ["Shoulder", "Elbow", "Wrist", "Hip", "Knee", "Ankle"] },
+    { category: "Spine", locations: ["Neck", "Back", "Waist"] },
+    { category: "Others", locations: ["Scoliosis"] }
 ];
 
 const buttonBottomOffset: number = 30;
-const progressStepsButtonNextText: string = "Suivant";
-const progressStepsButtonPreviousText: string = "Précédent";
-const progressStepsButtonFinishText: string = "Terminer";
+const progressStepsButtonNextText: string = "Next";
+const progressStepsButtonPreviousText: string = "Previous";
+const progressStepsButtonFinishText: string = "Done";
 
 
 export default function consultForm() {
@@ -149,25 +150,20 @@ export default function consultForm() {
             }
         }
 
-
-
-
     return (
-
         <View style={tw`relative flex-1 bg-white bg-blue-600`}>
             <View style={tw`z-10 flex-1`}>
-
                 <ProgressSteps>
                     <ProgressStep
                         scrollable={false}
-                        label="Informations Personnelles"
+                        label="Personal Information"
                         buttonNextText={progressStepsButtonNextText}
                         buttonBottomOffset={buttonBottomOffset}
                         onNext={onNextStep}
                         errors={progressErrors}
                     >
                         <Text style={tw`pb-2 mb-4 text-lg font-semibold text-center text-blue-200 border-b`}>
-                            Informations Personnelles
+                            Personal Information
                         </Text>
                         <KeyboardAwareScrollView
                             style={tw`rounded-lg`}
@@ -180,7 +176,7 @@ export default function consultForm() {
                             <View style={tw`items-center p-4 bg-white rounded-lg`}>
                                 <CustomTextInput
                                     // ref={emailRef}
-                                    label="Prénom *"
+                                    label="FirstName *"
                                     placeholder="Ex: Shelcy"
                                     keyboardType="default"
                                     autoCapitalize="none"
@@ -194,7 +190,7 @@ export default function consultForm() {
                                 />
                                 <CustomTextInput
                                     // ref={emailRef}
-                                    label="Nom*"
+                                    label="LastName *"
                                     placeholder="Ex: Youmbi"
                                     keyboardType="default"
                                     autoCapitalize="none"
@@ -252,8 +248,8 @@ export default function consultForm() {
                                 
                                 <CustomTextInput
                                     // ref={emailRef}
-                                    label="Ville*"
-                                    placeholder="Ex: Paris"
+                                    label="City*"
+                                    placeholder="Ex: Buea"
                                     keyboardType="default"
                                     autoCapitalize="none"
                                     leftIcon={<MaterialIcons name="location-city" size={20} color="#4B5563" />}
@@ -268,14 +264,14 @@ export default function consultForm() {
                         </KeyboardAwareScrollView>
                     </ProgressStep>
                     <ProgressStep
-                        scrollable={false} 
-                        label="Pathologie Ȧ Traiter"
+                        scrollable={false}
+                        label="Pathology To Treat"
                         buttonNextText={progressStepsButtonNextText}
                         buttonPreviousText={progressStepsButtonPreviousText}
                         buttonBottomOffset={buttonBottomOffset}
                     >
                         <Text style={tw`pb-2 mb-4 text-lg font-semibold text-center text-blue-200 border-b`}>
-                            Pathologie Ȧ Traiter
+                            Pathology To Treat
                         </Text>
                         <KeyboardAwareScrollView
                             style={tw`rounded-lg`}
@@ -290,7 +286,7 @@ export default function consultForm() {
                                     {pathologies.map((item) => (
                                         <TouchableOpacity
                                             key={item}
-                                            style={tw`flex-1 mx-1 px-3 py-2 rounded-md ${formData.pathology === item ? 'bg-blue-600' : 'bg-gray-100'
+                                            style={tw`flex-1 mx-1 px-2 py-2 rounded-md ${formData.pathology === item ? 'bg-blue-600' : 'bg-gray-100'
                                                 }`}
                                             onPress={() => handleChange('pathology', item)}
                                         >
@@ -306,7 +302,7 @@ export default function consultForm() {
                                         onValueChange={(value) => handleChange('painLocation', value)}
                                         style={Platform.OS === 'android' ? tw`text-gray-700` : undefined}
                                     >
-                                        <Picker.Item label="Sélectionnez une zone" value="" />
+                                        <Picker.Item label="Select an area" value="" />
                                         {painLocations.map((group) =>
                                             group.locations.map((loc) => (
                                                 <Picker.Item key={loc} label={`${group.category} - ${loc}`} value={loc} />
@@ -315,16 +311,12 @@ export default function consultForm() {
                                     </Picker>
                                 </View>
                                 <CustomTextInput
-                                    // ref={emailRef}
-                                    label="Niveau de douleur (1-10)"
+                                    label="Pain level (1-10)"
                                     placeholder="1"
                                     keyboardType="number-pad"
                                     autoCapitalize="none"
                                     leftIcon={<MaterialIcons name="height" size={20} color="#4B5563" />}
-                                    // value={formData.email}
-                                    onChangeText={(text) => handleChange('email', text)}
-                                    // error={errors.email}
-                                    // touched={touched.email}
+                                    onChangeText={(text) => handleChange('painLevel', text)}
                                     returnKeyType="next"
                                     onSubmitEditing={() => passwordRef.current?.focus()}
                                 />
@@ -333,7 +325,7 @@ export default function consultForm() {
                     </ProgressStep>
                     <ProgressStep 
                         scrollable={false} 
-                        label="Informations Médicales"
+                        label="Medical Information"
                         buttonNextText={progressStepsButtonNextText}
                         buttonPreviousText={progressStepsButtonPreviousText}
                         buttonFinishText={progressStepsButtonFinishText}
@@ -341,7 +333,7 @@ export default function consultForm() {
                         onSubmit={onsubmit}
                     >
                         <Text style={tw`pb-2 mb-4 text-lg font-semibold text-center text-blue-200 border-b`}>
-                            Informations médicales
+                            Medical information
                         </Text>
                         <KeyboardAwareScrollView
                             style={tw`rounded-lg`}
@@ -353,49 +345,34 @@ export default function consultForm() {
                         >
                             <View style={tw`items-center p-4 bg-white rounded-lg`}>
                                 <CustomTextInput
-                                    // ref={emailRef}
-                                    label="Traitements précédents"
-                                    placeholder="Avez-vous déjà reçu des traitements pour ce problème ?"
+                                    label="Previous treatments"
+                                    placeholder="Have you ever received treatments for this problem?"
                                     multiline
-                                    // numberOfLines={3}
                                     keyboardType="default"
                                     autoCapitalize="sentences"
-                                    // value={formData.email}
-                                    onChangeText={(text) => handleChange('email', text)}
-                                    // error={errors.email}
-                                    // touched={touched.email}
+                                    onChangeText={(text) => handleChange('previousTreatments', text)}
                                     returnKeyType="next"
                                     onSubmitEditing={() => passwordRef.current?.focus()}
                                 />
                                 <CustomTextInput
-                                    // ref={emailRef}
-                                    label="Antécédents médicaux"
-                                    placeholder="Chirurgies, maladies chroniques"
+                                    label="Medical history"
+                                    placeholder="Surgeries, chronic diseases"
                                     multiline
-                                    // numberOfLines={3}
                                     keyboardType="default"
                                     autoCapitalize="sentences"
-                                    // value={formData.email}
-                                    onChangeText={(text) => handleChange('email', text)}
-                                    // error={errors.email}
-                                    // touched={touched.email}
+                                    onChangeText={(text) => handleChange('medicalHistory', text)}
                                     returnKeyType="next"
                                     onSubmitEditing={() => passwordRef.current?.focus()}
                                 />
                                 <CustomTextInput
-                                    // ref={emailRef}
-                                    label="Médicaments actuels"
-                                    placeholder="Médicaments que vous prenez actuellement"
+                                    label="Current drugs"
+                                    placeholder="Drugs you are currently taking"
                                     multiline
                                     textAlign='left'
                                     textAlignVertical='top'
-                                    // numberOfLines={3}
                                     keyboardType="default"
                                     autoCapitalize="sentences"
-                                    // value={formData.email}
-                                    onChangeText={(text) => handleChange('email', text)}
-                                    // error={errors.email}
-                                    // touched={touched.email}
+                                    onChangeText={(text) => handleChange('medications', text)}
                                     returnKeyType="next"
                                     onSubmitEditing={() => passwordRef.current?.focus()}
                                 />
@@ -403,7 +380,6 @@ export default function consultForm() {
                         </KeyboardAwareScrollView>
                     </ProgressStep>
                 </ProgressSteps>
-                {/* </KeyboardAwareScrollView> */}
             </View>
             <BGCircle position='bottom-right' />
         </View>
