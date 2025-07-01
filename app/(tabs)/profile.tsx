@@ -1,4 +1,4 @@
-import { ScrollView, Text, TouchableOpacity, View, Image, StyleSheet } from 'react-native'
+import { ScrollView, Text, TouchableOpacity, View, Image, StyleSheet, StatusBar } from 'react-native'
 import React from 'react'
 import { useUserAuth } from '@/store/useUserAuth'
 import { MaterialIcons, FontAwesome5, Ionicons } from '@expo/vector-icons'
@@ -36,9 +36,12 @@ interface ProgressSummary {
 }
 
 // Define component props interfaces
+import type { ViewStyle } from 'react-native'
+
 interface ProfileSectionProps {
   title: string;
   children: React.ReactNode;
+  style?: ViewStyle;
 }
 
 interface ListItemProps {
@@ -83,8 +86,8 @@ export default function Profile(): React.JSX.Element {
         closeSessionToggle() // Toggle the onboarding state
     }
 
-    const ProfileSection: React.FC<ProfileSectionProps> = ({ title, children }) => (
-        <View style={tw`p-4 mx-4 mb-6 bg-white shadow-sm rounded-xl`}>
+    const ProfileSection: React.FC<ProfileSectionProps> = ({ title, children, style }) => (
+        <View style={[tw`p-4 mx-4 mb-6 bg-white shadow-sm rounded-xl`, style]}>
             <Text style={tw`mb-2 text-xl font-bold text-blue-800`}>{title}</Text>
             {children}
         </View>
@@ -104,8 +107,9 @@ export default function Profile(): React.JSX.Element {
 
     return (
         <ScrollView style={tw`flex-1 bg-gray-50`} showsVerticalScrollIndicator={false}>
+            <StatusBar barStyle="light-content" backgroundColor="#2563EB" />
             {/* Header section with profile photo */}
-            <View style={tw`items-center pt-12 pb-4 mb-4 bg-blue-600`}>
+            <View style={tw`items-center pt-12 pb-4 mb-6 bg-blue-600 rounded-b-[50px]`}>
                 <View style={tw`w-24 h-24 mb-2 overflow-hidden bg-white border-2 border-white rounded-full shadow-md`}>
                     <Image 
                         source={{ uri: 'https://randomuser.me/api/portraits/men/32.jpg' }} 
@@ -118,7 +122,7 @@ export default function Profile(): React.JSX.Element {
             </View>
 
             {/* Personal Information */}
-            <ProfileSection title="Personal Information">
+            <ProfileSection title="Personal Information" style={tw`border-2 border-blue-600 border-dashed`}>
                 <ListItem 
                     icon={<MaterialIcons name="phone" size={20} color="#3b82f6" />}
                     text={user.phone}

@@ -2,7 +2,7 @@ import { FlatList, Image, ScrollView, StyleSheet, Text, View } from 'react-nativ
 import React from 'react'
 import tw from 'twrnc';
 
-const data = [
+export const data = [
     { 
         id: 1, 
         title: 'Emergency Fracture Reduction', 
@@ -40,15 +40,15 @@ export default function Article() {
             <FlatList
                 data={data}
                 renderItem={({ item, index }) => (
-                    <View key={index} style={tw`flex-row gap-4 h-40 p-4 my-2 bg-indigo-200 shadow rounded-2xl`}>
-                        <View style={tw`flex-1 justify-between`}>
+                    <View key={index} style={tw`flex-row h-40 gap-4 p-4 my-2 bg-indigo-200 shadow rounded-2xl`}>
+                        <View style={tw`justify-between flex-1`}>
                             <View style={tw`flex-1`}>
                                 <Text style={tw`text-lg font-semibold text-gray-800`} ellipsizeMode='tail' numberOfLines={1}>{item.title}</Text>
                                 <Text style={tw`font-bold text-white`} ellipsizeMode='tail' numberOfLines={4}>{item.description}</Text>
                             </View>
                             <Text style={tw`text-gray-500`}>{item.author}</Text>
                         </View>
-                        <View style={tw`flex-row items-center w-24 bg-white rounded-3xl shadow`}>
+                        <View style={tw`flex-row items-center w-24 bg-white shadow rounded-3xl`}>
                             <Image source={item.imageUrl} style={tw`w-full h-full rounded-3xl`} />
                         </View>
                     </View>

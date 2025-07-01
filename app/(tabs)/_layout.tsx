@@ -1,14 +1,18 @@
 import React from 'react';
 import { Redirect, Tabs } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import AntDesign from '@expo/vector-icons/AntDesign';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { useUserAuth } from '@/store/useUserAuth';
 import { StatusBar } from 'react-native';
-  
+import { useUserAuth } from '@/store/useUserAuth';
+// Import Lucide icons
+import { 
+  Home, 
+  MessageSquare, 
+  Stethoscope, 
+  Building2, 
+  UserCircle 
+} from 'lucide-react-native';
 
 export default function TabLayout() {
-
   const hasFinishedOnboarding = useUserAuth((state) => state.hasFinishedOnboarding);
 
   // Redirect to the onboarding screen if the user has not finished onboarding.
@@ -18,10 +22,11 @@ export default function TabLayout() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <StatusBar barStyle="light-content" backgroundColor="#1e90ff" />
+      <StatusBar barStyle="dark-content" backgroundColor="#fff" />
       <Tabs
         screenOptions={{
           headerShown: false,
+          tabBarActiveTintColor: '#3b82f6', // Blue color for active tab
         }}
       >
         <Tabs.Screen
@@ -29,7 +34,7 @@ export default function TabLayout() {
           options={{
             title: 'Home',
             tabBarIcon: ({ color, size }) => (
-              <AntDesign name="home" size={size} color={color} />
+              <Home size={size} color={color} strokeWidth={2} />
             ),
           }}
         />
@@ -38,17 +43,16 @@ export default function TabLayout() {
           options={{
             title: 'Forum',
             tabBarIcon: ({ color, size }) => (
-              <AntDesign name="wechat" size={size} color={color} />
+              <MessageSquare size={size} color={color} strokeWidth={2} />
             ),
           }}
         />
-
         <Tabs.Screen
           name="consultation"
           options={{
             title: 'Consultation',
             tabBarIcon: ({ color, size }) => (
-              <AntDesign name="medicinebox" size={size} color={color} />
+              <Stethoscope size={size} color={color} strokeWidth={2} />
             ),
           }}
         />
@@ -56,8 +60,8 @@ export default function TabLayout() {
           name="clinic"
           options={{
             title: 'Clinic',
-            tabBarIcon: ({ color,size }) => (
-              <FontAwesome name="hospital-o" size={size} color={color} />
+            tabBarIcon: ({ color, size }) => (
+              <Building2 size={size} color={color} strokeWidth={2} />
             ),
           }}
         />
@@ -66,7 +70,7 @@ export default function TabLayout() {
           options={{
             title: 'Profile',
             tabBarIcon: ({ color, size }) => (
-              <AntDesign name="profile" size={size} color={color} />
+              <UserCircle size={size} color={color} strokeWidth={2} />
             ),
           }}
         />

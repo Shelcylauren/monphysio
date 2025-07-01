@@ -12,7 +12,7 @@ const isFirstTimeUser: boolean = true; // This should be replaced with actual lo
 export default function RootLayout() {
   return (
     <Stack>
-      <StatusBar barStyle="dark-content" backgroundColor="#1e90ff" />
+      {/* <StatusBar barStyle="dark-content" backgroundColor="#1e90ff" /> */}
       <Stack.Protected guard={!isLoggedIn && isFirstTimeUser}>
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
       </Stack.Protected>

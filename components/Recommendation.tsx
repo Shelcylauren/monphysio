@@ -56,25 +56,25 @@ const data = [
 
 export default function Recommendation() {
   return (
-    <View style={tw`p-4`}>
+    <View>
       {/* Services Section */}
-      <Text style={tw`text-lg font-bold text-gray-800 mb-2`}>Services</Text>
+      <Text style={tw`mb-2 text-lg font-bold text-gray-800`}>Services</Text>
       <FlatList
         data={services}
         keyExtractor={(item) => item.id}
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={tw`mb-4 gap-4`}
+        contentContainerStyle={tw`gap-4 mb-4`}
         renderItem={({ item }) => (
-          <View style={tw`bg-white rounded-lg w-52 p-4 shadow-md`}>
+          <View style={tw`p-4 bg-white border border-gray-400 rounded-lg w-52`}>
             <View style={tw`items-center mb-2`}>
               {/* Cast icon name as any to fix TypeScript error */}
               <MaterialCommunityIcons name={item.icon as any} size={32} color="#2563eb" />
-              <Text style={tw`text-center text-base font-semibold text-gray-800 mt-1`}>
+              <Text style={tw`mt-1 text-base font-semibold text-center text-gray-800`}>
                 {item.title}
               </Text>
             </View>
-            <Text style={tw`text-sm text-gray-600 text-center`}>
+            <Text style={tw`text-sm text-center text-gray-600`}>
               {item.description}
             </Text>
           </View>
@@ -82,15 +82,15 @@ export default function Recommendation() {
       />
 
       {/* Instructors Section */}
-      <Text style={tw`text-lg font-bold text-gray-800 mb-2`}>Instructors</Text>
+      <Text style={tw`mb-2 text-lg font-bold text-gray-800`}>Instructors</Text>
       <FlatList
         data={data}
         renderItem={({ item }) => (
           <View style={tw`p-4 flex-row bg-blue-600 justify-center items-center rounded-lg my-1 w-80 h-[30]`}>
             <Image source={item.imageUrl} style={tw`w-16 h-16 rounded-full`} />
             <View style={tw`flex-1 ml-4`}>
-              <Text style={tw`text-gray-200 text-xs`}>{item.duration}</Text>
-              <Text style={tw`font-bold text-lg text-white`} numberOfLines={1} ellipsizeMode="tail">
+              <Text style={tw`text-xs text-gray-200`}>{item.duration}</Text>
+              <Text style={tw`text-lg font-bold text-white`} numberOfLines={1} ellipsizeMode="tail">
                 {item.instructor}
               </Text>
               <Text style={tw`text-gray-300`} numberOfLines={3} ellipsizeMode="tail">
