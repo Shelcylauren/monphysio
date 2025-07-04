@@ -1,18 +1,43 @@
 import React from 'react'; 
-import { SafeAreaView, SectionList, View } from 'react-native'; 
+import { SafeAreaView, SectionList, View, Animated, Pressable } from 'react-native'; 
 import HomeHeader from '@/components/HomeHeader';
 import SearchBar from '@/components/SearchBar';
 import Recommendation from '@/components/Recommendation';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Image, Text, TouchableOpacity } from 'react-native';
 import tw from 'twrnc';
-// import { router } from 'expo-router';
+import { router } from 'expo-router';
+import { Brain } from 'lucide-react-native';
 
 // Import article data
 import { data as articleData } from '@/components/Article';
 
 export default function Index() {    
   const insets = useSafeAreaInsets();
+  const pulseAnim = React.useRef(new Animated.Value(1)).current;
+  
+  // Create pulse animation for the floating button
+  React.useEffect(() => {
+    Animated.loop(
+      Animated.sequence([
+        Animated.timing(pulseAnim, {
+          toValue: 1.1,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+        Animated.timing(pulseAnim, {
+          toValue: 1,
+          duration: 1000,
+          useNativeDriver: true,
+        }),
+      ])
+    ).start();
+  }, []);
+  
+  // Handle AI assistant button press
+  const handleAIPress = () => {
+    router.push('/(screens)/chatbot');
+  };
   
   // Prepare sections for SectionList
   const sections = [
@@ -104,6 +129,32 @@ export default function Index() {
           ) : null
         )}
       />
+      
+      {/* Floating AI Assistant Button */}
+      <Animated.View
+        style={[
+          tw`absolute z-50 bg-blue-600 rounded-full shadow-2xl right-6 bottom-10`,
+          {
+            transform: [{ scale: pulseAnim }],
+            shadowColor: '#3b82f6',
+            shadowOffset: { width: 0, height: 2 },
+            shadowOpacity: 0.5,
+            shadowRadius: 8,
+            elevation: 8,
+          },
+        ]}
+      >
+        <Pressable
+          style={tw`flex items-center justify-center w-16 h-16 rounded-full bg-gradient-to-r from-blue-600 to-blue-500`}
+          onPress={handleAIPress}
+          android_ripple={{ color: 'rgba(255,255,255,0.3)', borderless: true, radius: 32 }}
+          accessibilityLabel="Open AI physiotherapy assistant"
+          accessibilityHint="Opens a virtual AI assistant to help with physiotherapy questions"
+          accessibilityRole="button"
+        >
+          <Brain size={28} color="#ffffff" strokeWidth={2} />
+        </Pressable>
+      </Animated.View>
     </SafeAreaView>   
   ); 
 }

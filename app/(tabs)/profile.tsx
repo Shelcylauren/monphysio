@@ -37,6 +37,7 @@ interface ProgressSummary {
 
 // Define component props interfaces
 import type { ViewStyle } from 'react-native'
+import useLogOut from '@/hooks/useLogOut'
 
 interface ProfileSectionProps {
   title: string;
@@ -51,7 +52,6 @@ interface ListItemProps {
 }
 
 export default function Profile(): React.JSX.Element {
-    const closeSessionToggle = useUserAuth((state) => state.toggleHasOnboarded)
 
     {/*useUserAuth((state) => state.user) ||*/ }
     const user: User =  {
@@ -62,6 +62,11 @@ export default function Profile(): React.JSX.Element {
         address: "123 Main Street, Anytown",
         emergencyContact: "Jane Doe (+1 555-987-6543)"
     }
+
+    // Logout
+    const {logout} = useLogOut()
+    
+
     
     // Example data - in a real app, fetch from API/database
     const medicalHistory: MedicalHistoryItem[] = [
@@ -83,7 +88,8 @@ export default function Profile(): React.JSX.Element {
 
     const handleCloseSession = (): void => {
         // Logic to close the session goes here
-        closeSessionToggle() // Toggle the onboarding state
+        logout()
+
     }
 
     const ProfileSection: React.FC<ProfileSectionProps> = ({ title, children, style }) => (
@@ -112,7 +118,7 @@ export default function Profile(): React.JSX.Element {
             <View style={tw`items-center pt-12 pb-4 mb-6 bg-blue-600 rounded-b-[50px]`}>
                 <View style={tw`w-24 h-24 mb-2 overflow-hidden bg-white border-2 border-white rounded-full shadow-md`}>
                     <Image 
-                        source={{ uri: 'https://randomuser.me/api/portraits/men/32.jpg' }} 
+                        source={{ uri: 'https://randomuser.me/api/portraits/men/80.jpg' }} 
                         style={tw`w-full h-full`}
                         resizeMode="cover"
                     />

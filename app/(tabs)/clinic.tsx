@@ -74,7 +74,7 @@ const clinicData = {
       id: "1",
       name: "Dr. Sarah Johnson",
       role: "Lead Physiotherapist",
-      image: "https://randomuser.me/api/portraits/women/45.jpg",
+      image: "https://randomuser.me/api/portraits/women/16.jpg",
       specialties: "Sports Injuries, Spinal Rehabilitation",
       education: "DPT, University of California"
     },
@@ -82,7 +82,7 @@ const clinicData = {
       id: "2",
       name: "Dr. Michael Chen",
       role: "Senior Physiotherapist",
-      image: "https://randomuser.me/api/portraits/men/32.jpg",
+      image: "https://randomuser.me/api/portraits/men/55.jpg",
       specialties: "Manual Therapy, Neurological Rehabilitation",
       education: "PhD in Physical Therapy, Stanford University"
     },
@@ -90,7 +90,7 @@ const clinicData = {
       id: "3",
       name: "Emma Rodriguez",
       role: "Sports Rehabilitation Specialist",
-      image: "https://randomuser.me/api/portraits/women/33.jpg",
+      image: "https://randomuser.me/api/portraits/women/30.jpg",
       specialties: "Athletic Injuries, Return-to-Sport Programs",
       education: "MSc Sports Medicine, UCLA"
     }
@@ -99,21 +99,21 @@ const clinicData = {
     {
       id: "1",
       name: "Robert M.",
-      image: "https://randomuser.me/api/portraits/men/52.jpg",
+      image: "https://randomuser.me/api/portraits/men/30.jpg",
       text: "After my knee replacement, the team at MonPhysio was instrumental in my recovery. I'm now back to hiking and enjoying an active lifestyle!",
       rating: 5
     },
     {
       id: "2",
       name: "Jessica L.",
-      image: "https://randomuser.me/api/portraits/women/65.jpg",
+      image: "https://randomuser.me/api/portraits/women/62.jpg",
       text: "I've struggled with chronic back pain for years. The personalized treatment plan from Dr. Johnson has made a tremendous difference in my daily life.",
       rating: 5
     },
     {
       id: "3",
       name: "David K.",
-      image: "https://randomuser.me/api/portraits/men/41.jpg",
+      image: "https://randomuser.me/api/portraits/men/54.jpg",
       text: "As a competitive runner, I needed specialized care for my recurring ankle injury. The sports rehab program here got me back to racing in half the expected time.",
       rating: 5
     }

@@ -4,12 +4,17 @@ import { Alert } from "react-native";
 import { useRouter } from "expo-router";
 import useHandleError from "./useHandleError";
 import { useState } from "react";
+import { useGlobalStore } from "@/store/globalStore";
 
 
 const useSigninWithEmailAndPassword = () => {
     const [loading, setLoading] = useState(false);
     const { handleError } = useHandleError();
     const router = useRouter();
+
+    // const { setUser } = useGlobalStore();
+    const setUser = useGlobalStore(state => state.setUser);
+
     const signin = async (email: string, password: string) => {
         if (!email || !password) {
             // showToast('Please fill in all fields!', 'error');
@@ -40,7 +45,13 @@ const useSigninWithEmailAndPassword = () => {
             //     // User is signed in, redirect to home page
             //     router.replace('/');
             // }
-                router.replace('/');
+
+
+            // Set user in global store
+            setUser(user);
+
+            // Redirect to home page
+            router.replace('/');
         } catch (error: unknown) {
             // Handle error using custom error handler
             handleError(error);

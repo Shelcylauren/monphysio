@@ -11,7 +11,7 @@ import RNDateTimePicker from '@react-native-community/datetimepicker';
 import { Picker } from '@react-native-picker/picker';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { format, formatDistance, formatRelative, subDays, subYears } from 'date-fns'
-import { router } from 'expo-router';
+import { router, Stack } from 'expo-router';
 import { Button } from 'react-native'; // Add this import if not already present
 
 interface FormData {
@@ -152,6 +152,7 @@ export default function consultForm() {
 
     return (
         <View style={tw`relative flex-1 bg-white bg-blue-600`}>
+            <Stack.Screen name="consultForm" options={{ headerShown: false }} />
             <View style={tw`z-10 flex-1`}>
                 <ProgressSteps>
                     <ProgressStep

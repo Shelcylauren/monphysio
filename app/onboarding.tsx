@@ -14,6 +14,7 @@ export default function Index() {
   const router = useRouter();
 
   const handleDone = () => {
+    console.log("Onboarding completed");
     router.replace('/(auth)/signin')
   }
 

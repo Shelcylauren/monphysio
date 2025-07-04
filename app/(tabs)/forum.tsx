@@ -1,5 +1,3 @@
-// router.push('/(tabs)/Chatbot');
-
 import React, { useState, useCallback } from 'react';
 import { 
   View, Text, TouchableOpacity, TextInput, 

@@ -41,7 +41,7 @@ const forumPosts: ForumPost[] = [
         description: 'I had rotator cuff surgery 3 weeks ago and I\'m experiencing some discomfort during my recovery. What strategies have worked for others to manage pain while sleeping and during daily activities?',
         author: {
             name: 'Michael J.',
-            avatar: 'https://randomuser.me/api/portraits/men/32.jpg',
+            avatar: 'https://randomuser.me/api/portraits/men/91.jpg',
             role: 'Patient'
         },
         category: 'recovery',
@@ -57,7 +57,7 @@ const forumPosts: ForumPost[] = [
         description: 'After 6 months of chronic lower back pain, these specific exercises from my physio have made a huge difference. Thought I\'d share my routine and progress with everyone here!',
         author: {
             name: 'Sarah L.',
-            avatar: 'https://randomuser.me/api/portraits/women/44.jpg',
+            avatar: 'https://randomuser.me/api/portraits/women/69.jpg',
             role: 'Patient'
         },
         category: 'exercise',
@@ -73,7 +73,7 @@ const forumPosts: ForumPost[] = [
         description: 'My physio gave me a set of exercises to do at home but wasn\'t specific about frequency. Should I do them every day? Multiple times per day? Looking for advice from those who\'ve been through rehab.',
         author: {
             name: 'Alex T.',
-            avatar: 'https://randomuser.me/api/portraits/men/67.jpg',
+            avatar: 'https://randomuser.me/api/portraits/men/83.jpg',
         },
         category: 'exercise',
         likes: 18,
@@ -87,7 +87,7 @@ const forumPosts: ForumPost[] = [
         description: 'I\'m 2 weeks post-op from ACL reconstruction and looking for dietary recommendations to help with recovery and reducing inflammation. Any foods that particularly helped or hurt your recovery?',
         author: {
             name: 'Jessica M.',
-            avatar: 'https://randomuser.me/api/portraits/women/23.jpg',
+            avatar: 'https://randomuser.me/api/portraits/women/92.jpg',
         },
         category: 'nutrition',
         likes: 32,
@@ -102,7 +102,7 @@ const forumPosts: ForumPost[] = [
         description: 'I\'ve been dealing with Achilles tendinopathy for over a year now. Most days are manageable but occasionally I get severe flare-ups. What strategies help you manage these unpredictable episodes?',
         author: {
             name: 'Robert K.',
-            avatar: 'https://randomuser.me/api/portraits/men/45.jpg',
+            avatar: 'https://randomuser.me/api/portraits/men/16.jpg',
             role: 'Patient'
         },
         category: 'pain',
@@ -117,7 +117,7 @@ const forumPosts: ForumPost[] = [
         description: 'After a year of struggling with adhesive capsulitis (frozen shoulder), I want to share my journey and what finally worked for me. It was a long process but I now have almost full range of motion again!',
         author: {
             name: 'Linda W.',
-            avatar: 'https://randomuser.me/api/portraits/women/74.jpg',
+            avatar: 'https://randomuser.me/api/portraits/women/88.jpg',
         },
         category: 'recovery',
         likes: 89,

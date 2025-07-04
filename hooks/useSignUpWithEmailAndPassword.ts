@@ -1,15 +1,17 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "@/Firebase/firebase";
-import { collection, doc, serverTimestamp, setDoc } from "firebase/firestore";
+import { collection, doc, setDoc } from "firebase/firestore";
 import useHandleError from "./useHandleError";
 import { Alert } from "react-native";
 import useCheckUserEmail from "./useCheckUserEmail";
+import { useGlobalStore } from "@/store/globalStore";
 
 type SignUpWithEmailAndPasswordProps = {
     email: string;
     password: string;
-
 };
+
+
 export const useSignUpWithEmailAndPassword = () => {
 
     const usersCollection = collection(db, 'users');
@@ -17,7 +19,10 @@ export const useSignUpWithEmailAndPassword = () => {
     const { handleError } = useHandleError();
 
     const { checkUserEmail } = useCheckUserEmail();
-    // const auth = getAuth();
+
+    // Global state
+  const setUser = useGlobalStore(state => state.setUser);
+  const setUserData = useGlobalStore(state => state.setUserData);
 
     const signUp = async ({ email, password}: SignUpWithEmailAndPasswordProps) => {
 
@@ -42,6 +47,7 @@ export const useSignUpWithEmailAndPassword = () => {
             // }
 
             //create user document in firestore
+            //create user document in Firestore
             const userDocRef = doc(usersCollection, user.uid);
             await setDoc(userDocRef, {
                 email: user.email,
@@ -51,6 +57,14 @@ export const useSignUpWithEmailAndPassword = () => {
                 profilePicture: user.photoURL || '',
             });
 
+            // Update global state
+            setUser(user);
+            setUserData({
+                name: user.displayName || '',
+                email,
+                role: 'patient',
+                createdAt: new Date()
+            });
             return user;
         } catch (error) {
             // Handle error using custom error handler
